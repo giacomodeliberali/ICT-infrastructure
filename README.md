@@ -212,13 +212,13 @@ Watt = cos fi * V * A
 For example an idle server with 2 CPUs (14 cores each) consumes 140 Watts.
 
 ### Power Distribution
-The Industrial current il 380 Volts, 3 phases.  
+The industrial current il 380 Volts, 3 phases.  
 The ammount of current allowed in a DC are the Ampere on the **PDU** (Power Distribution Unit)
 
-There are one or more lines (for reliability and fault tolerance reasond) coming from different generators to the datacenter (i.e. each line 80 KW , 200 A more or less. Can use it for 6 racks 32A/ rack. Maybe I will not use the whole 32 A so I can put more racks).  
+There are one or more lines (for reliability and fault tolerance reasons) coming from different generators to the datacenter (i.e. each line 80 KW , 200 A more or less).  
 The lines are attached to an **UPS Uninterruptible Power Supply/Source**. It is a rack or half a rack with batteries (not enought to keep on the servers) that in some cases can power the DC for ~20 minutes. There are a **Control Panel** and a **Generator**. When the power lines fail the UPS is active between their failure and the starting of the generator.  The energy that arrives to the UPS should be divided among the servers and the switches.
 The UPS is attached to the **PDU** (Power Distribution Unit) which is linked to the **server PDU** with a pair of lines for redundancy. In the server there are the power plugs in a row that can be  monitored via a web server running on the rack PDU.  
-Example of rack PDU: 2 banks, 12 plugs each, 16 A each bank, 15 KW per rack, 42 servers per rack.
+Example of rack PDU: 2 banks, 12 plugs each, 16 A each bank, 15 KW per rack.
 
 ### PUE: Power Usage Effectiveness
 
@@ -265,12 +265,6 @@ If you read wikipedia pages about IB and OmniPath you will find a acronym: RDMA.
 
 RDMA supports zero-copy networking by enabling the network adapter to transfer data directly to or from application memory, eliminating the need to copy data between application memory and the data buffers in the operating system. Such transfers require no work to be done by CPUs, caches, or context switches, and transfers continue in parallel with other system operations. When an application performs an RDMA Read or Write request, the application data is delivered directly to the network, reducing latency and enabling fast message transfer.
 
-### Some consideration about numbers
-Start think about real world. We have some server with 1 Gbps (not so high speed, just think that is the speed you can reach with your laptop attaching a cable that is in classroom in the univesity). We have to connects this servers to each other, using a switches (each of them has 48 ports). We have a lots of servers... The computation is done.
-
-<p align="center">
-  <img width="600" src="./assets/speed-required.png">
-</p>
 
 #### Real use case
 As we see we need a lots of bandwith to manage a lots of service (you don't say?) and even if the north-south traffic (the traffic that goes outsite from our datacenter) can be relatively small (the university connection exits on the world with 40 Gbps), the east-west traffic (the traffic inside the datacenter) can reach a very huge number of Gbps. [Aruba datacenter](https://www.arubacloud.com/infrastructures/italy-dc-it1.aspx) (called IT1) with another Aruba datacenter (IT2) reach a bandwidth of 82 Gbps of Internet connection.
@@ -394,6 +388,13 @@ A tipicall configuration of the ports and bandwidth of the leaves is:
 
 Just a small remark: with spine and leaf we introduce more hops, so more latency, than the chassis approach.
 
+### Some consideration about numbers
+Start think about real world. We have some server with 1 Gbps (not so high speed, just think that is the speed you can reach with your laptop attaching a cable that is in classroom in the univesity). We have to connects this servers to each other, using a switches (each of them has 48 ports). We have a lots of servers... The computation is done.
+
+<p align="center">
+  <img width="400" src="./assets/speed-required.png">
+</p>
+
 #### Full Fat Tree
 
 In this network topology, the link that are nearer the top of the hierarchy are "fatter" (thicker) than the link further down the hierarchy. Used only in high performance computing where performances have priority over budgets.
@@ -410,7 +411,7 @@ Now, the problem is that every switch can be connected to each other and so ther
 It works by applying _tags_ to network packets (in Ethernet frame) and handling these tags in the networking systems. 
 
 <p align="center">
-  <img width="600" src="./assets/vlan.png">
+  <img width="500" src="./assets/vlan.png">
 </p>
 
 A switch can be configured to accept some tags on some ports and some other tags on some other ports. 
