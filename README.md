@@ -110,9 +110,9 @@ ICT Infrastructures - University of Pisa (Italy)
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 # Introduction
-The world is changing and a lot of axiom are becoming false. Some example? In the bachelor course (and not, sigh), the teachers say: "The main bottleneck is the disk", and so all the performance are evalueted with reference to disk usage, number of IOs operations and so on... This, nowadays, is false.  Just thing of [Intel Optane SSD](https://www.anandtech.com/show/11702/intel-introduces-new-ruler-ssd-for-servers) where the new SSD tecnologie based on 3D NAND permits to write and read more fast then previous SSD (the disk that we have installed on our system, sigh number 2), and so we have to redesign the system. There is also **nvRAM**, non volatile RAM : a module similar to the hard drive but really fast. Some distributed file system, written in '90s, are crashing due the axiom that the disks are slower than CPU and so you have enough time to do all the computation needed. False! 
+The world is changing and a lot of axiom are becoming false. Some example? In the bachelor course (and not, sigh), the teachers say: "The main bottleneck is the disk", and so all the performance are evaluated with reference to disk usage, number of IOs operations and so on... This, nowadays, is false.  Just thing of [Intel Optane SSD](https://www.anandtech.com/show/11702/intel-introduces-new-ruler-ssd-for-servers) where the new SSD tecnologie based on 3D NAND permits to write and read more fast then previous SSD (the disk that we have installed on our system, sigh number 2), and so we have to redesign the system. Another example is also **nvRAM**, non volatile RAM : a module similar to the hard drive but really fast. Some distributed file system, written in '90s, are crashing due the axiom that the disks are slower than CPU and so you have enough time to do all the computation needed. False! 
 
-Another example is in application and server distribution. In the past many application was managed on each server with a shared storage, nowadays we have deploy a large application on a clusters of server with local storage, so new system to develop and manage distributed computing application is needed (Hadoop, cassandra (distributed DB), Spark (Computation)...).
+Another example is in application and server distribution. In the past many application was managed on each server with a shared storage, nowadays we have deployed a large application on a clusters of server with local storage, so new system to develop and manage distributed computing application is needed (Hadoop, cassandra (distributed DB), Spark (Computation)...).
 
 The world is evolving faster than I can write this notes, so maybe some things written here are already obsolete, so we can not waste any more time on introduction to avoid to need to rewrite the introduction. 
 
@@ -193,7 +193,7 @@ These units may be a supplement to raised-floor cooling (creating a plenum to di
   <img width="600" src="./assets/in-row-cooling.jpg">
 </p>
 
-The in-row cooling unit draws warm exhaust air directly from the hot aisle, cools it and distributes it to the cold aisle. This ensures that inlet temperatures are steady for precise operation. Coupling the air conditioning with the heat source produces an efficient direct return air path; this is called “close coupled cooling,” which also lowers the fan energy required. In-row cooling also prevents the mixing of hot and cold air, thus increasing efficiency.
+The in-row cooling unit draws warm exhaust air directly from the hot aisle, cools it and distributes it to the cold aisle. This ensures that inlet temperatures are steady for precise operation. Coupling the air conditioning with the heat source produces an efficient direct return air path; this is called “close coupled cooling”, which also lowers the fan energy required. In-row cooling also prevents the mixing of hot and cold air, thus increasing efficiency.
 
 It's possible to give more cooling to a single rack, moduling the air needed. In front of the rack thare are temperature and humidity sensors (humidity should be avoided because can conduct electricity).
 There are systems collecting data from the sensors and adjusting the fans. The racks are covered to separate cool air and hot air. It's also possible to optimize the datacenter cooling according to the temperature changes of the region where the datacenter is.
@@ -201,15 +201,14 @@ There are systems collecting data from the sensors and adjusting the fans. The r
 Generally 2 racks (each 70 cm), 1 colling row (30 cm), 2 racks, 1 row ..
 
 ### Liquid cooling
-Having water in a DC is a risky business (even if there are different ways to handle a fire). Make the water flow ont thre CPUs lowers the temperature for ~40%. One way of chilling the water could be pushing it down to the ground. Water Distribution System, like the Power Distribution System.
+Having water in a DC is a risky business (even if there are different ways to handle a fire). Make the water flow on the CPUs lowers the temperature for ~40%. One way of chilling the water could be pushing it down to the ground. Water Distribution System, like the Power Distribution System.
 
 ## Current
-A 32 KW (consume of 10 appartments) datacenter is small.  
+
 **Direct Current Transformers** from AC to DC. Direct current is distributed inside the datacenter even if is more dangerous than Alternating current.
 
 Watt = cos fi * V * A  
-**cos fi** gives the efficency of the power supply and generally it changes according to the ammount of current needed (idle vs under pressure).
-
+**cos fi** gives the efficency of the power supply and generally it changes according to the ammount of current needed (idle vs under pressure). 
 For example an idle server with 2 CPUs (14 cores each) consumes 140 Watts.
 
 ### Power Distribution
@@ -218,7 +217,8 @@ The ammount of current allowed in a DC are the Ampere on the **PDU** (Power Dist
 
 There are one or more lines (for reliability and fault tolerance reasond) coming from different generators to the datacenter (i.e. each line 80 KW , 200 A more or less. Can use it for 6 racks 32A/ rack. Maybe I will not use the whole 32 A so I can put more racks).  
 The lines are attached to an **UPS Uninterruptible Power Supply/Source**. It is a rack or half a rack with batteries (not enought to keep on the servers) that in some cases can power the DC for ~20 minutes. There are a **Control Panel** and a **Generator**. When the power lines fail the UPS is active between their failure and the starting of the generator.  The energy that arrives to the UPS should be divided among the servers and the switches.
-The UPS is attached to the **PDU** (Power Distribution Unit) which is linked to the **server PDU** with a pair of lines for redundancy. In the server there are the power plugs in a row that can monitored via a web server running on the rack PDU. Example of rack PDU: 2 banks, 12 plugs each, 16 A each bank, 15 KW per rack, 42 servers per rack.
+The UPS is attached to the **PDU** (Power Distribution Unit) which is linked to the **server PDU** with a pair of lines for redundancy. In the server there are the power plugs in a row that can be  monitored via a web server running on the rack PDU.  
+Example of rack PDU: 2 banks, 12 plugs each, 16 A each bank, 15 KW per rack, 42 servers per rack.
 
 ### PUE: Power Usage Effectiveness
 
@@ -370,14 +370,15 @@ The chassis is connected with the rack's **tor** and **bor** (top/bottom of rack
  #### Stacking
  Indipendent switches stacked with dedicated links. It's cheaper than the chassis but there is less redundancy.
 
-#### Spine and leaf Architecture
+#### Spine and leaf Architecture 
+https://community.fs.com/blog/leaf-spine-with-fs-com-switches.html
 
 <p align="center">
   <img width="600" src="./assets/spine-leaf-vs-3-tier.png">
 </p>
 
 With the increased focus on east-west data transfer the three-tier design architecture is being replaced with Spine-Leaf design. The switches are diveded into 2 groups, the leaf switches and spine switches. Every leaf switch in a leaf-spine architecture connects to every switch in the network fabric. 
-In that topoligy the **Link Aggregation Control Protocol (LACP) is used**. It provides a method to control the bundling of several physical ports together to form a single logical channel. The bandwidth is aggregated (i.e. 2*25 Gbps), but it's still capped to 25 Gbps because the traffic goes only from one way to the other each time. 
+In that topoligy the **Link Aggregation Control Protocol (LACP) is used**. It provides a method to control the bundling of several physical ports together to form a single logical channel. The bandwidth is aggregated (i.e. 2*25 Gbps), ((but it's still capped to 25 Gbps because the traffic goes only from one way to the other each time.))
 
 - fixed form factor (non modular switches)
 - active-active redundancy
@@ -388,7 +389,7 @@ With this architecture it's possible to turn off one switch, upgrade it and rebb
 
 A tipicall configuration of the ports and bandwidth of the leaves is:
 - one third going upwards and two thirds going downwards
-- 48 ports 10 Gbps each , 6 ports 40 Gbps each
+- 48 ports 10 Gbps each downwards to the servers , 6 ports 40 Gbps each upwards
 - or 48 ports 25 each, 6 ports 100 each
 
 Just a small remark: with spine and leaf we introduce more hops, so more latency, than the chassis approach.
@@ -423,7 +424,7 @@ Datacenter's switches are usually non-blocking. It basically means that this swi
 
 Now some standard are trying to impose a common structure to the network elements (switch included) to facilitate the creation of standard orchestration and automation tools.
 
-The internal is made of a **control plane** which is configurable and a **data plane** where there are the ports. The control plain evolved during the years, now they run an OS and Intel CPU's. Through a CLI Command Line Interface it's possible to configure the control plaun. Some exaples of command are:
+The internal is made of a **control plane** which is configurable and a **data plane** where there are the ports. The control plane evolved during the years, now they run an OS and Intel CPU's. Through a CLI Command Line Interface it's possible to configure the control plane. Some exaples of command are:
 - show running config
 - show interfaces status 
 - show vlan
@@ -448,7 +449,7 @@ THe data plain is connected to a DC's VM which acts as a control plane.
 
 # Disks and Storage
 After the fabric, another fondamental component of a datacenter is the storage. The storage can be provided with various tecnologies. 
-The simple one is that the disk are put inside each servers and are used as we use the disk on our laptop. Of course it is not useful fs we have a bunch of data to manage, and some networking solution can be better to use.
+The simple one is that the disk are put inside each servers and are used as we use the disk on our laptop. Of course it is not useful if we have a bunch of data to manage, and some networking solution can be better to use.
 
 ## Interfaces
 
@@ -473,7 +474,7 @@ Input/output operations per second is an input/output performance measurement us
 
 ## Functional programming
 
-Has become so popular also because of its nature: its pure functions can easily computed in a parallel system (no storage so no necessity of locks). It's an event based programmuing: pass a function when something appens. In Object Oriented languages it's more complicated cause we have interfaces, event listeners...  
+Has become so popular also because of its nature: its pure functions can easily computed in a parallel system (no storage so no necessity of locks). It's an event based programming: pass a function when something appens. In Object Oriented languages it's more complicated cause we have interfaces, event listeners...  
 
 ## Memory Hierarchy
 
@@ -539,7 +540,7 @@ The main features that are provided by a storage system are the following:
  	- The Recovery Point Objective is defined by business continuity planning. It is the maximum targeted period in which data might be lost from an IT service due to a major incident. 
  - Network Interface (iSCSI, Fibre Channel...)
  - RAID
- - Tiering
+ - **Tiering**
  	- Tiering is a technology to assign a category to data to choose various type of storage media to reduce total storage cost. Tiered storage policies place the most frequently accessed data on the highest performing storage. Rarely accessed data goes on low-performance, cheaper storage.
  - NAS Protocols
  - Snapshot
@@ -772,7 +773,7 @@ Access Control Lists are difficult to manage with lots of users.
 
 **auditing** activity of checking that system security is properly working. Keep monitoring the interaction of the user on a resource; get an allert when something suspicious occurs.
 
-MINIMUM PROVILEGE PRINCIPLE : every user must be able to access only the information and resources that are necessary for its legitimate purpose.
+MINIMUM PRIVILEGE PRINCIPLE : every user must be able to access only the information and resources that are necessary for its legitimate purpose.
 
 **right != privilege**  
 The first is given to you by someone, the second it's posssesed by you just because who you are.  
@@ -792,7 +793,6 @@ Disable the possibility of changing the MAC address at the hypervisor level.
 - **level 3 firwall**: looks at the envelop, source address, port ...
 - **level 7 firewall**: reconstruct the full pkt looking inside it's content.
 
----
 
 Share the identities of the users to not replicate them in each server:
 - **lDAP** lightweight Directly Access Protocol: distributed database organized as a tree where we store the name of the users.
@@ -809,7 +809,7 @@ Information processors (cloud providers) are responsible of the infos they proce
 **service avaiability** = 1 - (downtime/ agreed service time)  
 The uptime is difficult to define and to test because the reachability of the cloud depend also from the service providers.
 
-The lower the resources used, the higher the margin got. Low level magrgin business: very high numbers * low margins = big profits.
+The lower the resources used, the higher the margin got. Low level margin business: very high numbers * low margins = big profits.
 
 **Service Operation** is crucial, it keeps up the whole thing running.  
 **Service Level** not only functional requirements.
@@ -1008,13 +1008,52 @@ With spine and leaf I have 50 Gbps  cause I double (active-active).
 
 Consider at leat 5 full used nodes with 25 Gbps network. Since I want to have some redundancy and efficiency I can use 8 to 10 nodes. I'm overprovisioning but it's good.
 
-Every HCI node will have some SSD (at leat 2, 1 GB/sec writing) and some mechanical drives.  If I use SATA drives I need al leat 6 for each node because the bottle neck is in their bandwidth. I can use NVMe drives: lower number but I pay more.
+Every HCI node will have some SSD (at leat 2; 1 GB/sec writing) and some mechanical drives.  If I use SATA drives I need al leat 6 for each node because the bottle neck is in their bandwidth. I can use NVMe drives: lower number but I pay more.
 
 - **Consider SLA**: how much I gonna pay for the missed target/data? If it's a lot it's better to overprovision.
 
 Remember that bandwidth are not fully used because of some overhead..
 
+# About numbers
+## Current
+- Watt = cos fi * A * V
+- The Industrial current il 380 Volts, 3 phases
+- 32 KW (consume of 10 appartments) datacenter is a small one
+- 2 idle CPUs (14 cores each) consume 140 Watts 
+- lines coming from the generator to the UPS: 80 KW each, ~ 200 A; can be used for 6 racks each 32 A (I will not use the whole 32 A so I'll put more racks) 
+- rack PDU: 2 banks, 12 plugs each
+  - 16 A each bank
+  - 15 KW per rack
+  - 42 servers per rack (42 U) => ~ 350 W x server (2 CPUs 140 W look above)
 
+## Fabric
+- ethernet MTU 9 KB (jumbo frame)
+- TCP/IP introduce 70-100 micro sec of latency
+- Infiniband MTU 4 KB, latency 2 micro sec
+- servers with 1 Gbps connection (not so high) connected to 48 ports switch => switch uplink 48 Gbps.
+- 100 Gbps uppper bound nowadays for ethernet (using QSFP28, 4 * 25 Gbps)
+- other bandwidths
+  - 25 Gbps
+  - 50 Gbps (2* 25)
+  - 16 Gbps
+  - 40 Gbps (4 *10)  
+- STP can take up to 30-50 sec to converge
+- some switches up to 1 KWatt (years ago 200 W)
+- **spine and leaf**
+  - LACP links 2*25 Gbps
+  - 1/3 ports upwards, 2/3 downward
+  - 48 ports 10 Gbps downward
+    - plus 6 ports 40 Gbps each upward
+  - 48 ports 25 Gbps each downward
+    - 6 port 100 Gbps upward
+
+## Disk and Storage
+- PCI express bus 15 GB/s = 120 Gbps
+- 4 drives can saturate a full PCIe bus and also a 100 Gbps link
+- NVMe drives up to 11 GBps (to be verified)
+- Intel Ruler up to 1 PB capacity
+- SATA SSD 500 MB bandwidth
+- 4 fiber channel are enought with 15 GB/s
 
 # References
  - https://tools.ietf.org/html/rfc4391
