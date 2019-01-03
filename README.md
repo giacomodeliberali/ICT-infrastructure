@@ -411,7 +411,7 @@ Now, the problem is that every switch can be connected to each other and so ther
 It works by applying _tags_ to network packets (in Ethernet frame) and handling these tags in the networking systems. 
 
 <p align="center">
-  <img width="600" src="./assets/vlan.png">
+  <img width="500" src="./assets/vlan.png">
 </p>
 
 A switch can be configured to accept some tags on some ports and some other tags on some other ports. 
