@@ -12,6 +12,7 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [Table of contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Cloud Computing Reference Model [Module 2]](#cloud-computing-reference-model-module-2)
 - [Data centers](#data-centers)
@@ -33,6 +34,7 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
   - [Omni-Path](#omni-path)
   - [Connectors & plugs](#connectors--plugs)
   - [Software Defined Approach](#software-defined-approach)
+    - [Open Flow](#open-flow)
     - [SDN: Software Defined Networking](#sdn-software-defined-networking)
     - [Software-defined data center](#software-defined-data-center)
     - [Hyper-convergence](#hyper-convergence)
@@ -99,7 +101,7 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
       - [Live Migration of a VM](#live-migration-of-a-vm)
       - [Server Setup Checklist](#server-setup-checklist)
       - [Backups](#backups)
-    - [Security layer  (TODO: complete)](#security-layer--todo-complete)
+    - [Security layer (TODO: complete)](#security-layer-todo-complete)
       - [Levels of security](#levels-of-security)
       - [Firwall](#firwall)
     - [Service Managment layer](#service-managment-layer)
@@ -133,6 +135,9 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
   - [Current](#current-1)
   - [Fabric](#fabric-1)
   - [Disk and Storage](#disk-and-storage)
+- [Real Use Cases](#real-use-cases)
+- [Open Source](#open-source)
+- [Books](#books)
 - [References](#references)
 - [Contributors](#contributors)
 
@@ -1681,6 +1686,23 @@ Remember that bandwidth are not fully used because of some overhead..(e.g. to co
 - 4 fiber channel are enought with 15 GB/s
 - SATA interface 16 Gbps
 - SCSI interface 22.5 Gbps
+
+# Real Use Cases
+ - [Introducing data center fabric, the next-generation Facebook data center network](https://code.fb.com/production-engineering/introducing-data-center-fabric-the-next-generation-facebook-data-center-network/)
+ - [Facebook - Designing a Very Efficient Data Center](https://www.facebook.com/notes/facebook-engineering/designing-a-very-efficient-data-center/10150148003778920/)
+ - [Google - Efficiency: How we do it](https://www.google.com/about/datacenters/efficiency/internal/)
+
+# Open Source
+In 2011 Facebook announced the [Open Compute Project](https://www.opencompute.org) (OCP), an organization that shares designs of data center products among companies, including Facebook, IBM, Intel, Nokia, Google, Microsoft and many others.
+
+Their mission is to design and enable the delivery of the most efficient server, storage and data center hardware designs for scalable computing. 
+
+
+
+# Books & Guides
+- [Cisco - Design Zone - Design Guides](https://www.cisco.com/c/en/us/solutions/design-zone.html)
+- [Building a Modern Data Center](https://www.actualtechmedia.com/wp-content/uploads/2018/05/Building-a-Modern-Data-Center-ebook.pdf)
+- [IBM Data Center Networking](http://www.redbooks.ibm.com/redbooks/pdfs/sg247928.pdf)
 
 # References
 - https://tools.ietf.org/html/rfc4391
