@@ -1,4 +1,4 @@
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
 
 ICT Infrastructures - University of Pisa (Italy)
 
@@ -1690,7 +1690,7 @@ Remember that bandwidth are not fully used because of some overhead..(e.g. to co
 
 # References
 - https://tools.ietf.org/html/rfc4391
-- [Omni-Path](https://en.wikipedia.org/wiki/Omni-Path)
+- Omni-Path - https://en.wikipedia.org/wiki/Omni-Path
 - https://en.wikipedia.org/wiki/Remote_direct_memory_access
 - https://www.arubacloud.com/infrastructures/italy-dc-it1.aspx
 - https://en.wikipedia.org/wiki/Software-defined_networking
@@ -1710,7 +1710,7 @@ Remember that bandwidth are not fully used because of some overhead..(e.g. to co
 - Drives performances - http://www.itc.unipi.it/wp-content/uploads/2016/05/ITC-TR-02-16.pdf
 - HCI - https://www.nutanix.com/hyperconverged-infrastructure/
 - Spine and leaf - https://community.fs.com/blog/leaf-spine-with-fs-com-switches.html
-- [Spine and leaves](https://community.fs.com/blog/leaf-spine-with-fs-com-switches.html)
+- Spine and leaves - https://community.fs.com/blog/leaf-spine-with-fs-com-switches.html
 - Power consumption - https://searchdatacenter.techtarget.com/answer/How-do-I-estimate-server-power-consumption-per-rack
 - UPS dimension - https://searchdatacenter.techtarget.com/feature/How-do-I-figure-size-requirements-for-new-UPS-unit
 
@@ -1718,8 +1718,8 @@ Remember that bandwidth are not fully used because of some overhead..(e.g. to co
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars0.githubusercontent.com/u/4717227?v=4" width="100px;" alt="Giacomo De Liberali"/><br /><sub><b>Giacomo De Liberali</b></sub>](http://giacomodeliberali.com)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=giacomodeliberali "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/34099303?v=4" width="100px;" alt="Frioli Leonardo"/><br /><sub><b>Frioli Leonardo</b></sub>](https://github.com/wikilele)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=wikilele "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/6088300?v=4" width="100px;" alt="Alessandro Pagiaro"/><br /><sub><b>Alessandro Pagiaro</b></sub>](https://apagiaro.it)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=alessandro308 "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/36964883?v=4" width="100px;" alt="LorenzoBellomo"/><br /><sub><b>LorenzoBellomo</b></sub>](https://github.com/LorenzoBellomo)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=LorenzoBellomo "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/4587828?v=4" width="100px;" alt="Mohamed Megahed"/><br /><sub><b>Mohamed Megahed</b></sub>](https://github.com/megantosh)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=megantosh "Documentation") |
-| :---: | :---: | :---: | :---: | :---: |
+| [<img src="https://avatars.githubusercontent.com/u/36964883" width="100px;" alt="Lorenzo Bellomo"/><br /><sub><b>Lorenzo Bellomo</b></sub>](https://github.com/LorenzoBellomo)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=LorenzoBellomo "Documentation") | [<img src="https://avatars.githubusercontent.com/u/18645793" width="100px;" alt="Aldo D'Aquino"/><br /><sub><b>Aldo D'Aquino</b></sub>](https://github.com/daquinoaldo)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=daquinoaldo "Documentation") | [<img src="https://avatars.githubusercontent.com/u/4717227" width="100px;" alt="Giacomo De Liberali"/><br /><sub><b>Giacomo De Liberali</b></sub>](http://giacomodeliberali.com)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=giacomodeliberali "Documentation") | [<img src="https://avatars.githubusercontent.com/u/34099303" width="100px;" alt="Leonardo Frioli"/><br /><sub><b>Leonardo Frioli</b></sub>](https://github.com/wikilele)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=wikilele "Documentation") | [<img src="https://avatars.githubusercontent.com/u/4587828" width="100px;" alt="Mohamed Megahed"/><br /><sub><b>Mohamed Megahed</b></sub>](https://github.com/megantosh)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=megantosh "Documentation") | [<img src="https://avatars.githubusercontent.com/u/6088300" width="100px;" alt="Alessandro Pagiaro"/><br /><sub><b>Alessandro Pagiaro</b></sub>](https://apagiaro.it)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=alessandro308 "Documentation") |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
