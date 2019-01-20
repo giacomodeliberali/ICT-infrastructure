@@ -309,7 +309,7 @@ The connection can be performed with various technologies, the most famous is **
 **MTU** (Maximum Transfer Unit) up to 9 KB with the so called **Jumbo Frames**.
 On top of ethernet there are TCP/IP protocols (this is a standard), they introduce about 70-100 micro sec of latency.
 
-The disadvantage of Ethernet is the not reliability.
+The disadvantage of Ethernet is the low reliability.
 
 ## Infiniband 
 Even if Ethernet is so famous, there are other standard to communicate. **InfiniBand (IB)**, by Mellanox, is another standard used in high-performance computing (HPC) that features very high throughput and very low latency (about 2 microseconds). InfiniBand is a protocol and a physical infrastructure and it can send up to 2GB messages with 16 priorities level.
@@ -351,21 +351,20 @@ Now we try to analyse the problem from the connector point of view. The fastest 
   There can be a cable with a LC in one side and a SC on the other side.  
 
  Of course, a wire is a wire, and we need something to connect it to somewhere (transceiver):
- - **RJ45**, in datacenters there are almost no installations of it
-   - cat4 cables
-       - 10 Mbps, the cheapest and the one that requires less power
-       - 100 Mbps, for home environment
-       - 1 Gbps, for large offices and buildings
-   - cat5 and cat6 cables, 2.5 and 5 Gbps respectively: them are the newest, used for media or in large context like campus in order to deliver more bandwidth to the WiFi access point
- - **SPF** (Small Form-factor Pluggable), a compact, hot-pluggable optical module transceiver
-   - 1 Gbps
- - **SFP+**, can be combined with some other SFP
-   - 10 Gbps
- - **SFP28**, where the number 28 is the number of pins
-   - 25 GBps
- - **QSFP** (Quad SPF), obtained combining four lines of SFP
-   - 40 Gbps (QSPF+, 4x10 Gbps SFP+), it is mainly discontinued now because it was not a great solution to increase the bandwidth
-   - 100 Gbps (QSFP28, 4x25 Gbps SFP28), available also in the 50 Gbps version (2x25 Gbps SFP28)
+  - **SPF** (Small form-factor pluggable), a compact, hot-pluggable optical module transceiver
+    - 1 Gbps
+  - **SFP+**, can be combined with some other SFP+
+    - 10 Gbps
+  - **QSFP** (Quad SPF)
+    - 4x10 Gbps (if combined with SPF+)
+  - **SFP28**, where the number 28 is the number of pins
+    - 25 GBps
+  - **QSFP28** (Quad SPF28)
+    - 4x25 Gbps (if combined with SFP28)
+  - **RJ45**, in datacenters there are almost no installations of it 
+    - 10/100 Mbps, 1/2.5/5 Gbps.
+    - Different cables have categories (cat4, cat5, cat6) 
+      - 2.5/5 Gbps are new standards working on cat5 and cat6 cables respectively, in order to deliver more bandwidth to the WiFi access point. 
 
 RJ45 | SPF+ | QSPF+ transceiver module | LC connector
 :-:|:-:|:-:|:-:
@@ -392,15 +391,6 @@ Benefits of software-defined approach:
 - Enables to achieve scale-out architecture 
 - Provides a central point of access to all management functions
 
-
-<!--- TODO: remove?
-### Open Flow
-
-[OpenFlow](https://en.wikipedia.org/wiki/OpenFlow) is a communications protocol that gives access to the forwarding plane of a network switch or router over the network.
-The switch, once approved the initial connection with a firewall, redirect the allowed traffic to another port, bypassing the firewall since it is not able to handle the entire data flow bandwidth ([Open daylight](https://www.opendaylight.org/)).
-
-- copy/redirect/ close the flow to optimize and control the behavior of the network.
--->
 
 ### SDN: Software Defined Networking
 SDN is an architecture purposing to be dynamic, manageablea and cost-effective ([SDN Wikipedia](https://en.wikipedia.org/wiki/Software-defined_networking#Concept)). This type of software create a virtual network to manage the network with more simplicity.
@@ -624,8 +614,11 @@ The more common RAID configurations are:
 - RAID-6: block-level striping with double distributed parity. Similar to RAID1 but with more disks.
 
 ## Memory Hierarchy
-
 **Tiering** is a technology that categorizes data to choose different type of storage media to reduce the total storage cost. Tiered storage policies place the **most frequently accessed data on the highest performing storage**. Rarely accessed data goes on low-performance, cheaper storage.
+
+<p align="center">
+  <img src="./assets/memory-tiering.png" width="600">
+</p>
 
 **Caches**:
 - CPU Registries
@@ -634,10 +627,11 @@ The more common RAID configurations are:
 **Memory tiering**:
 - RAM
 - nvRAM (uses [nvDIMM](#nvdimm))
-- SSD Memory
-- Hard drive
+
 
 **Storage tiering**: 
+- SSD Memory
+- Hard drive
 - Tape
 
 ### NVMe
@@ -1710,10 +1704,13 @@ Remember that bandwidth are not fully used because of some overhead..(e.g. to co
 - Drives performances - http://www.itc.unipi.it/wp-content/uploads/2016/05/ITC-TR-02-16.pdf
 - HCI - https://www.nutanix.com/hyperconverged-infrastructure/
 - Spine and leaf - https://community.fs.com/blog/leaf-spine-with-fs-com-switches.html
-- Spine and leaves - https://community.fs.com/blog/leaf-spine-with-fs-com-switches.html
+- Spine and leaf - https://blog.westmonroepartners.com/a-beginners-guide-to-understanding-the-leaf-spine-network-topology/
 - Power consumption - https://searchdatacenter.techtarget.com/answer/How-do-I-estimate-server-power-consumption-per-rack
 - UPS dimension - https://searchdatacenter.techtarget.com/feature/How-do-I-figure-size-requirements-for-new-UPS-unit
-
+- Automatic Transfer Switch - https://ethancbanks.com/2014/08/22/what-is-an-automatic-transfer-switch-power/
+- Securing a datacenter - https://www.youtube.com/watch?v=cLory3qLoY8
+- Live migration of a VM in nutanix HCI - https://www.youtube.com/watch?v=LlArzoASFNc 
+- Live migration of a VM (Hyper-V and vMotion) - https://searchservervirtualization.techtarget.com/feature/Lets-get-this-straight-VM-live-migration
 # Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
