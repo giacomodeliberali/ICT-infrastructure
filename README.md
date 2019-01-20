@@ -70,15 +70,15 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
   - [Form-factors](#form-factors)
   - [Misc](#misc-1)
 - [Cloud](#cloud)
-  - [Cloud computering Layers](#cloud-computering-layers)
+  - [Cloud computing Layers](#cloud-computing-layers)
     - [Cross functional layers](#cross-functional-layers)
-    - [Phyisical Layer](#phyisical-layer)
+    - [Physical Layer](#physical-layer)
     - [Virtual Layer](#virtual-layer)
       - [VM Network components](#vm-network-components)
       - [VM components](#vm-components)
       - [Types of virtualization](#types-of-virtualization)
       - [Virtual Machine (VM)](#virtual-machine-vm)
-      - [vRAM balooning](#vram-balooning)
+      - [vRAM ballooning](#vram-ballooning)
       - [Docker](#docker)
     - [Control Layer](#control-layer)
       - [Key phases for provisioning resources](#key-phases-for-provisioning-resources)
@@ -885,15 +885,15 @@ There is a trade off between centralization (the bottleneck is the storage) and 
 </p>
 
 
-**Rapid Elasticity**: consumers can adapt to variation in workloads and mantain required performance levels. This permits also to reduce costs avoiding the overprovisining.
+**Rapid Elasticity**: consumers can adapt to variation in workloads and maintain required performance levels. This permits also to reduce costs avoiding the overprovisining.
 
-**High Avaialability**: the cloud provide high avaialabity. This feature can be achived with redundancy of resources to avoid system failure. Some Load Balancer is used to balance the request between all the resources to avoid failure due the resources saturation on some machine.
+**High Availability**: the cloud provide high availability. This feature can be achieved with redundancy of resources to avoid system failure. Some Load Balancer is used to balance the request between all the resources to avoid failure due the resources saturation on some machine.
 
-The cloud infrastrucure can be **public**, if it is provisioned for open use by the general public; or **private**, if is provisioned for exclusive use by a single organization comprising multiple consumers.
+The cloud infrastructure can be **public**, if it is provisioned for open use by the general public; or **private**, if is provisioned for exclusive use by a single organization comprising multiple consumers.
 
-## Cloud computering Layers
+## Cloud computing Layers
 
-The cloud infrastrucure can be see as a **layered infrastructure**. 
+The cloud infrastructure can be see as a **layered infrastructure**. 
 
 ### Cross functional layers
 In the cloud computing reference model there are some sylos of cross layer functionalities, they mainly revolve around:
@@ -901,7 +901,7 @@ In the cloud computing reference model there are some sylos of cross layer funct
 - Security: policies, standard procedures, firewalls, antivirus, intrusion detection/prevention.
 - Service Management: Portfolio (SLA, roadmap, customer support...) and operation (monitoring, provisioning, compliance...)
 
-### Phyisical Layer
+### Physical Layer
 
 <p align="center">
   <img src="./assets/physical-layer.png" width="600">
@@ -979,10 +979,10 @@ The Virtual Disk is a file of fixed size or dynamically expanding. The vOS can b
 The Virtual CPU masks the feature of a CPU to a VM. The VCPU can be overbooked, up to twice the number of cores. The CPU has several rings of protection (user ... nested vos,vos,os).
 
 
-#### vRAM balooning
+#### vRAM ballooning
 
-It's not allowed to use a virtual memory as vRAM because the sum of the vRAM should be less or equal to the actual RAM. Fragmentation could be a problem if there is lot of unused reserved memory. In order to achive this, a technique called balooning has been introduced.  
-It is sayd to the VM: "Look, you have 1TB of RAM but most of it it's occupied". In this way we have dynamically expanding blocks of RAM: if the OS needs memory I can deflate the baloon by moving the occupancy threshold.
+It's not allowed to use a virtual memory as vRAM because the sum of the vRAM should be less or equal to the actual RAM. Fragmentation could be a problem if there is lot of unused reserved memory. In order to achive this, a technique called ballooning has been introduced.  
+It is said to the VM: "Look, you have 1TB of RAM but most of it it's occupied". In this way we have dynamically expanding blocks of RAM: if the OS needs memory I can deflate the baloon by moving the occupancy threshold.
 
 #### Docker
 
