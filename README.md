@@ -1,3 +1,5 @@
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
+
 ICT Infrastructures - University of Pisa (Italy)
 
 *Since there is only little material on ICT Infrastructures course, this is a recap and summary of classes. The notes are a compilation of the course contents and focus on the topics in accordance with Prof. Antonio Cisternino's OneNote Notebook. 
@@ -13,8 +15,8 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
 - [Introduction](#introduction)
 - [Cloud Computing Reference Model [Module 2]](#cloud-computing-reference-model-module-2)
 - [Data centers](#data-centers)
-  - [Design and Architectures](#design-and-architectures)
-    - [Cooling](#cooling)
+- [Design and Architectures](#design-and-architectures)
+  - [Cooling](#cooling)
       - [CRAC: Computer Room Air Conditioner](#crac-computer-room-air-conditioner)
       - [Hot/Cold aisles](#hotcold-aisles)
       - [In-Row cooling](#in-row-cooling)
@@ -22,6 +24,7 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
       - [Other ideas](#other-ideas)
   - [Current](#current)
     - [Power Distribution](#power-distribution)
+      - [Power factor](#power-factor)
     - [PUE: Power Usage Effectiveness](#pue-power-usage-effectiveness)
 - [Fabric](#fabric)
   - [Ethernet](#ethernet)
@@ -42,6 +45,7 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
     - [Three-tier design](#three-tier-design)
     - [Spine and leaf Architecture](#spine-and-leaf-architecture)
     - [Oversubscription](#oversubscription)
+    - [Some considerations about numbers](#some-considerations-about-numbers)
     - [Full Fat Tree](#full-fat-tree)
     - [VLAN](#vlan)
     - [Switch Anatomy](#switch-anatomy)
@@ -53,7 +57,7 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
     - [NVMe](#nvme)
     - [nvDIMM](#nvdimm)
     - [Misc](#misc)
-    - [Storage aggregation](#storage-aggregation)
+  - [Storage aggregation](#storage-aggregation)
   - [Network Area Storage (NAS)](#network-area-storage-nas)
   - [Storage Area Network (SAN)](#storage-area-network-san)
   - [HCI - Hyperconvergent Systems](#hci---hyperconvergent-systems)
@@ -62,7 +66,6 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
   - [Some consideration about Flash Drives](#some-consideration-about-flash-drives)
   - [Storage in the future](#storage-in-the-future)
 - [Servers](#servers)
-  - [Hypervisors](#hypervisors)
   - [Types of compute systems](#types-of-compute-systems)
   - [Form-factors](#form-factors)
   - [Misc](#misc-1)
@@ -73,34 +76,46 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
     - [Virtual Layer](#virtual-layer)
       - [VM Network components](#vm-network-components)
       - [VM components](#vm-components)
-      - [About the virtual memory:](#about-the-virtual-memory)
-      - [Balooning](#balooning)
-      - [Other considerations about the Virtual Layer](#other-considerations-about-the-virtual-layer)
+      - [Types of virtualization](#types-of-virtualization)
+      - [Virtual Machine (VM)](#virtual-machine-vm)
+      - [vRAM balooning](#vram-balooning)
       - [Docker](#docker)
     - [Control Layer](#control-layer)
+      - [Key phases for provisioning resources](#key-phases-for-provisioning-resources)
+      - [Thin provisioning](#thin-provisioning)
+      - [Open stack](#open-stack)
     - [Service layer](#service-layer)
+      - [Service layer](#service-layer-1)
     - [Orchestration layer](#orchestration-layer)
+      - [Cloud portal](#cloud-portal)
+      - [Orchestration types](#orchestration-types)
+      - [Orchestration APIs](#orchestration-apis)
       - [Example of orchestration workflows](#example-of-orchestration-workflows)
       - [Service orchestration](#service-orchestration)
     - [Business Continuity layer](#business-continuity-layer)
-      - [Redundancy (to avoid single point of failure)](#redundancy-to-avoid-single-point-of-failure)
-      - [Redundancy and service Zones](#redundancy-and-service-zones)
+      - [Single point of failure](#single-point-of-failure)
+      - [Redundancy](#redundancy-1)
       - [Service Availability Zones](#service-availability-zones)
       - [Live Migration of a VM](#live-migration-of-a-vm)
-      - [Server Setup Checklist:](#server-setup-checklist)
+      - [Server Setup Checklist](#server-setup-checklist)
       - [Backups](#backups)
-      - [Backup types](#backup-types)
-    - [Security layer](#security-layer)
+    - [Security layer  (TODO: complete)](#security-layer--todo-complete)
+      - [Levels of security](#levels-of-security)
       - [Firwall](#firwall)
     - [Service Managment layer](#service-managment-layer)
+      - [Service Operation management](#service-operation-management)
+      - [Capacity Planning/ Management](#capacity-planning-management)
+      - [Incident/Problem Management](#incidentproblem-management)
+      - [Examples](#examples)
       - [GDPR General Data Protection Regulation](#gdpr-general-data-protection-regulation)
       - [Vendor Lock-in](#vendor-lock-in)
       - [Standardization-Portability](#standardization-portability)
-  - [Miscellaneous](#miscellaneous)
+  - [Misc](#misc-2)
 - [In class exercises](#in-class-exercises)
-  - [1) Spine and leaves VS traditional architecture](#1-spine-and-leaves-vs-traditional-architecture)
+  - [1) Spine and leaf VS traditional architecture](#1-spine-and-leaf-vs-traditional-architecture)
     - [Question](#question)
     - [Solution](#solution)
+  - [Spine and Leaf](#spine-and-leaf)
   - [2) Orchestration layer](#2-orchestration-layer)
     - [Question](#question-1)
     - [Solution](#solution-1)
@@ -113,13 +128,13 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
   - [5) Dimension a hyperconvergent system](#5-dimension-a-hyperconvergent-system)
     - [Question](#question-4)
     - [Solution](#solution-4)
-    - [Solution summary](#solution-summary)
 - [Other questions](#other-questions)
 - [About numbers](#about-numbers)
   - [Current](#current-1)
   - [Fabric](#fabric-1)
   - [Disk and Storage](#disk-and-storage)
 - [References](#references)
+- [Contributors](#contributors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 </details>
@@ -127,7 +142,7 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
 # Introduction
 The ICT world is changing (and will keep changing beyond the last time these notes were updated) and a lot of axioms about its infrastructures are becoming outdated. A couple of examples:
 
-- a few years ago it was known that the main bandwidth bottleneck is the disk, and so a system's whole performance was evaluated with reference to disk usage, number of IOs operations and so on... This, nowadays, is false.  Just think of [Intel Optane SSD](https://www.anandtech.com/show/11702/intel-introduces-new-ruler-ssd-for-servers) where the new SSD technology based on 3D NAND permits to write and read is faster than previous SSD, and so we have to redesign the entire system accordingly. Additionally, nvRAM (non-volatile RAM) are becoming more of an industry standard. nvRAM is a storage module similar to the hard drive but much faster. Hence, some distributed file systems, written in '90s, are becoming obsolete and conflicting with current trend or even crash due the axiom that the disks are slower than CPU and give enough time to do computation between the previously slower read/write operations! 
+- a few years ago it was known that the main bandwidth bottleneck was the disk, and so a system's whole performance was evaluated with reference to disk usage, number of IOs operations and so on... This, nowadays, is false.  Just think of [Intel Optane SSD](https://www.anandtech.com/show/11702/intel-introduces-new-ruler-ssd-for-servers) where the new SSD technology based on 3D NAND permits to write and read faster than previous SSD, and so we have to redesign the entire system accordingly. Additionally, nvRAM (non-volatile RAM) are becoming more of an industry standard. nvRAM is a storage module similar to the hard drive but much faster. 
 
 - In application and server distribution. In the past many applications were managed on each server with a shared storage. Nowadays we have deploy a large application on server clusters (i.e. a server node composed of multiple units working together as one) with local storage, so new system to develop and manage distributed computing application is needed (Hadoop, Cassandra, Spark...).
 
@@ -167,9 +182,9 @@ Prefabricated group of racks, already cabled and cooled, are automatically inser
 
 The datacenter is a place where we concentrate IT system in order to reduce costs. Servers are demanding in terms of current, cooling and security. 
 
-## Design and Architectures
+# Design and Architectures
 
-### Cooling
+## Cooling
 
 Today cooling is air based. Just the beginning for liquid cooling.  
 The air pushed though the server gets a 10/15 degrees temperature augment.
@@ -223,14 +238,16 @@ A lot of research has been lately invested towards oil cooling computers, partic
 #### Other ideas
 A typical approach to cool the air is to place chillers outside the building, or by trying geocooling, which revolves around using the cold air in depth. The main idea is to make a deep hole in the ground, and make the cables pass through it. 
 
-
 ## Current
 A 32KW datacenter is small (also if it consumes the same amount of current of 10 apartments).  
 
 *Direct Current Transformers* from AC to DC. Direct current is distributed inside the datacenter even if is more dangerous than alternating current.
 
-Watt = cos fi * V * A  where on the left is DC and on the right (V) is AC
-**cos fi** gives the efficiency of the power supply and generally it changes according to the amount of current needed (idle vs under pressure).  
+<p align="center">
+  <img src="http://latex.codecogs.com/gif.latex?\text{Watt}%20=%20\cos\phi\cdot%20V\cdot%20A"/>
+</p>
+
+Where ![cosfi](http://latex.codecogs.com/gif.latex?\cos\phi) gives the efficiency of the power supply and generally it changes according to the amount of current needed (idle vs under pressure). ![cosfi](http://latex.codecogs.com/gif.latex?\cos\phi) is the heat dissemination happening from conversion of AC into DC current, and it is a number <= 1.
 For example an idle server with 2 CPUs (14 cores each) consumes 140 Watts.
 
 ### Power Distribution
@@ -244,6 +261,29 @@ The UPS is attached to the *PDU* (Power Distribution Unit) which is linked to th
 
 Example of rack PDU: 2 banks, 12 plugs each, 16 A each bank, 15 KW per rack, 42 servers per rack.
 
+#### Power factor
+<details>
+  <summary>Click to expand</summary>
+
+Alternating current (AC) supplies our buildings and equipment. AC is more efficient for power companies to deliver, but when it hits the equipment's transformers, it exhibits a characteristic known as reactance.
+
+Reactance reduces the useful power (watts) available from the apparent power (volt-amperes). The ratio of these two numbers is called the power factor (PF). Therefore, the actual power formula for AC circuits is watts = volts x amps x power factor. Unfortunately, the PF is rarely stated for most equipment, but it is always a number of 1.0 or less, and about the only thing with a 1.0 PF is a light bulb.
+
+For years, large UPS systems were designed based on a PF of 0.8, which meant that a 100 kVA UPS would only support 80 kW of real power load.
+
+The majority of large, commercial UPS systems are now designed with a PF of 0.9. This recognizes that most of today's computing technology presents a PF of between 0.95 and 0.98 to the UPS. Some UPS systems are even designed with PFs of 1.0, which means the kVA and kW ratings are identical (100 kVA = 100 kW). However, since the IT load never presents a 1.0 PF, for these UPS systems, the actual load limit will be the kVA rating.
+
+
+ Use the hardware manufacturers' online configurations if possible. As a last resort, use the server's power supply rating -- a server with a 300-Watt power supply can never draw 800 Watts. Size the power systems based on real demand loads.
+
+Dual-corded equipment adds redundancy to IT hardware, and the lines share power load. If a dual-corded server has two 300-Watt power supplies, it can still draw no more than 300 Watts in your power design, because each power supply has to be able to handle the server's full load (not including power supply efficiency calculations).
+
+The other way to estimate total server power consumption is to use industry norms. Unless you're hosting high performance computing, you can probably figure groupings in three levels of density: Low density cabinets run 3.5 to 5 kW; medium density run 5 to 10 kW; high density run 10 to 15 kW. The amount of each rack type to allocate depends on your operation. Generally, data centers operate with about 50% low density cabinets, 35% medium and 15% high density.
+
+
+If your projected average is more than 1.5 times your existing average, take a closer look at the numbers. This result is fine if you expect a significant density increase, due to new business requirements or increased virtualization onto blade servers. But if there's no apparent reason for such a density growth, re-examine your assumptions.
+</details>
+
 ### PUE: Power Usage Effectiveness
 
 PUE is a ratio that describes how efficiently a computer data center uses energy; specifically, how much energy is used by the computing equipment (in contrast to cooling and other overhead).
@@ -252,8 +292,11 @@ PUE is the ratio of total amount of energy used by a computer data center facili
 
 As example, consider that the PUE of the university's datacenter during 2018 is less 1.2, while the average italian data center's PUE are around 2-2.5.
 
-If the PUE is equal to 2 means that for each Watt used for computing, 2 Watts are used for cooling.
-The ratio is Total Current divided by Compute Current.
+If the PUE is equal to 2 means that for each Watt used for computing, 1 Watt is used for cooling.
+
+<p align="center">
+  <img src="http://latex.codecogs.com/gif.latex?\text{PUE}%20=%20\dfrac{\text{total%20current}}{\text{compute%20current}}%20"/>
+</p>
 
 # Fabric
 The fabric is the interconnection between nodes inside a datacenter. We can think this level as a bunch of switch and wires. 
@@ -293,19 +336,8 @@ RDMA supports zero-copy networking by enabling the network adapter to transfer d
 </p>
 
 ## Omni-Path
-Moreover, another communication architecture that exist and is interested to see is Omni-Path. This architecture is owned by Intel and performs high-performance communication. Production of Omni-Path products started in 2015 and a mass delivery of these products started in the first quarter of 2016 (you can insert here some more stuff written on [Wikipedia](https://en.wikipedia.org/wiki/Omni-Path)). 
+Moreover, another communication architecture that exist and is interested to see is Omni-Path. This architecture is owned by Intel and performs high-performance communication([Ompni-Path Wikipedia](https://en.wikipedia.org/wiki/Omni-Path)). 
 The interest of this architecture is that Intel plans to develop technology based on that will serve as the on-ramp to exascale computing (a computing system capable of the least one exaFLOPS). 
-<!--
-## Some consideation about numbers
-Start think about real world. We have some server with 1 Gbps (not so high speed, just think that is the speed you can reach with your laptop attaching a cable that is in classroom in the university). We have to connect this servers to each other, using switches (each of them has 48 ports). We have a lots of servers... The computation is done.
-
-<p align="center">
-  <img width="600" src="./assets/speed-required.png">
-</p>
-
-## Real use case 
-As we see we need a lots of bandwidth to manage a lots of service and even if the north-south traffic (the traffic that goes outside from our datacenter) can be relatively small (the university connection exits on the world with 40 Gbps), the east-west traffic (the traffic inside the datacenter) can reach a very huge number of Gbps. [Aruba datacenter](https://www.arubacloud.com/infrastructures/italy-dc-it1.aspx) (called IT1) with another Aruba datacenter (IT2) reach a bandwidth of 82 Gbps of Internet connection.
--->
 
 ## Connectors & plugs
 Now we try to analyse the problem from the connector point of view. The fastest wire technology available is the optic fiber. It can be divided into two categories:
@@ -335,13 +367,9 @@ Now we try to analyse the problem from the connector point of view. The fastest 
    - 40 Gbps (QSPF+, 4x10 Gbps SFP+), it is mainly discontinued now because it was not a great solution to increase the bandwidth
    - 100 Gbps (QSFP28, 4x25 Gbps SFP28), available also in the 50 Gbps version (2x25 Gbps SFP28)
 
-From left to right: RJ45 plug, SFP+ and QSFP+ **transceiver module**, LC connector. 
-<p float="left">
-  <img width="100" src="./assets/rj45.jpeg">
-  <img width="150" src="./assets/sfpplus.jpg">
-  <img width="250" src="./assets/qsfpplus.png">
-  <img width="150" src="./assets/lc-duplex.jpg">
-</p>
+RJ45 | SPF+ | QSPF+ transceiver module | LC connector
+:-:|:-:|:-:|:-:
+<img width="100" src="./assets/rj45.jpeg">  |  <img width="150" src="./assets/sfpplus.jpg"> | <img width="250" src="./assets/qsfpplus.png"> | <img width="150" src="./assets/lc-duplex.jpg">
 
 Nowadays we have:
 - 25 Gbps 
@@ -363,7 +391,6 @@ Benefits of software-defined approach:
 - Provides cost efficiency: enables to effectively use the existing infrastructure and low-cost commodity hardware to lower CAPEX
 - Enables to achieve scale-out architecture 
 - Provides a central point of access to all management functions
-- Allows to create new innovative services using the underlying resources
 
 
 <!--- TODO: remove?
@@ -376,7 +403,7 @@ The switch, once approved the initial connection with a firewall, redirect the a
 -->
 
 ### SDN: Software Defined Networking
-SDN is an architecture purposing to be dynamic, manageable, cost-effective and some more nice attribute readable [here](https://en.wikipedia.org/wiki/Software-defined_networking#Concept). This type of software create a virtual network to manage the network with more simplicity.
+SDN is an architecture purposing to be dynamic, manageablea and cost-effective ([SDN Wikipedia](https://en.wikipedia.org/wiki/Software-defined_networking#Concept)). This type of software create a virtual network to manage the network with more simplicity.
 
 The main concept are the following:
  - Network control is directly programmable (also from remote)
@@ -497,15 +524,25 @@ Just a small remark: with spine and leaf we introduce **more hops**, so more lat
 
 ### Oversubscription
 
-Fabric switch **port oversubscription** occurs when the **amount of internal switching bandwidth allocated to a given switch port is less than the device connection speed at that port**. For example, if a port on a Fibre Channel switch has a connection speed of 2 Gbps but is unable to achieve wire-rate 2 Gbps of performance, then the port is said to be oversubscribed. 
+Another factor to keep in mind when designing your fabric is the **oversubscription ratio**. In a leaf-spine design, this oversubscription is measured as the **ratio of downlink ports** (to servers/storage) **to uplink ports** (to spine switches). If you have 20 servers each connected with 10Gbps links and 4 10Gbps uplinks to your spine switches, you have a 5:1 oversubscription ratio (200Gbps/40Gbps). Significant increases in the use of multi-core CPUs, server virtualization, flash storage, Big Data and cloud computing have driven the requirement for modern networks to have lower oversubscription. Current **modern network designs** have oversubscription ratios of **3:1** or less.
 
-Fabric **switch oversubscription** occurs when the **overall switching bandwidth of the switch is less than the aggregate bandwidth** of all ingress switch ports. This means that a subset of the total number of ports can run at full wire-rate simultaneously, but not all ports can.
-
-Given two linked switches with a 100 Gbps link and 48 ports with 10 Gbps per port. Then: 
-  - *oversubscription* = 48*10 / 100 = 4.8
-
-A degree that is considered acceptable is **2.5**. But is it possible to achieve a degree of oversubscription equal to 1?
+Is it possible to achieve a degree of oversubscription equal to 1?
 Yes, and it is possible by just linking half the ports upwards and half down. This is the basis of the full fat tree.
+
+### Some considerations about numbers
+<details>
+  <summary>
+    Click to show or hide
+  </summary>
+Start think about real world. We have some server with 1 Gbps (not so high speed, just think that is the speed you can reach with your laptop attaching a cable that is in classroom in the university). We have to connect this servers to each other, using switches (each of them has 48 ports). We have a lots of servers... The computation is done.
+
+<p align="center">
+  <img width="600" src="./assets/speed-required.png">
+</p>
+
+As we see we need a lots of bandwidth to manage a lots of service and even if the north-south traffic (the traffic that goes outside from our datacenter) can be relatively small (the university connection exits on the world with 40 Gbps), the east-west traffic (the traffic inside the datacenter) can reach a very huge number of Gbps. [Aruba datacenter](https://www.arubacloud.com/infrastructures/italy-dc-it1.aspx) (called IT1) with another Aruba datacenter (IT2) reach a bandwidth of 82 Gbps of Internet connection.
+  
+</details>
 
 ### Full Fat Tree
 
@@ -534,7 +571,7 @@ A **switch can be configured to accept some tags** on some ports and some other 
 VLAN are useful to manage the **access control** to some resources (and avoid to access to some subnetwork from other subnetwork). Different VLANs are usually used for different purposes.
 
 ### Switch Anatomy
-A switch is an ASIC (application-specific integrated circuit). It can be proprietary architecture or non-proprietary. Layer 2 switches receive packets and implements the equivalent of a bus: store and forward (there is a special address allowing broadcast). At layer 3 there is no loop problem, as in layer 2, because of the Internet Table.
+A switch is an ASIC (Application-Specific Integrated Circuit). It can be proprietary architecture or non-proprietary. Layer 2 switches receive packets and implements the equivalent of a bus: store and forward (there is a special address allowing broadcast). At layer 3 there is no loop problem, as in layer 2, because of the Internet Table.
 
 Datacenter's switches are usually **non-blocking**. It basically means that this switches have the forwarding capacity that supports concurrently **all ports at full capacity**.
 
@@ -566,8 +603,6 @@ The data plane is connected to a DC's VM which acts as a control plane.
 A Firewall can only perform security check on a flow, but cannot manage the flow itself. Furthermore, is not possible to let pass the entire traffic through the Firewall, because it would be a bottleneck. For that reason, after the security checks the firewall divert the flow directly to router and switches thanks to [OpenFlow API](https://ryu.readthedocs.io/en/latest/ofproto_ref.html).
 
 # Disks and Storage
-After the fabric, another fundamental component of a datacenter is the storage. The storage can be provided with various technologies. 
-The simplest one is that the disks are put inside each servers and are used as we use the disk on our laptop. Of course it is not useful if we have a bunch of data to manage, and some networking solution can be better to use.
 
 **IOPS**: Input/output operations per second is an input/output performance measurement used to characterize computer storage devices (associated with an access pattern: random or sequential).
 
@@ -635,7 +670,7 @@ nvDIMM allows to put SSDs on the memory BUS as for the RAM instead of the PCIe a
 - With Intel Optane storage is only 35% slower then the RAM, so there is the need for supporting large non volatile memory tier with super fast access.
 
 
-### Storage aggregation
+## Storage aggregation
 
 Actually, the Hard Drive problem is not the speed but the latency. With a large bandwidth HDD are fast on contiguous data, but have a high latency on sparse data, on which are very slow.
 
@@ -656,7 +691,7 @@ NAS is a **file-level** computer data storage server connected to a computer net
 Basically **the whole storage is exposed as a file system**. When using a network file system protocol, you are using a NAS.
 
 Storage system architectures are based on data access methods whose common variants are:
-- **block-based**: a block-based storage system enables the creation and assignment of storage volumes to compute systems. The compute OS (or hypervisor) discovers these **storage volumes as local drives**. A file system can be created on these storage volumes, for example NTFS in a Windows environment, which can then be formatted and used by applications.
+- **block-based (SAN)**: a block-based storage system enables the creation and assignment of storage volumes to compute systems. The compute OS (or hypervisor) discovers these **storage volumes as local drives**. A file system can be created on these storage volumes, for example NTFS in a Windows environment, which can then be formatted and used by applications.
 
 <p align="center">
   <img src="./assets/block-based-storage-access.png" width="600">
@@ -668,7 +703,7 @@ Storage system architectures are based on data access methods whose common varia
   <img src="./assets/file-based-storage-access.png" width="600">
 </p>
 
-- **object-based**: object-based storage is a way to **store file data in the form of objects based on the content and other attributes** of the data rather than the name and location of the file. An object contains user data, related metadata (size, date, ownership, etc.), and user defined attributes of data (retention, access pattern, and other business-relevant attributes). The additional **metadata or attributes enable optimized search**, retention and deletion of objects. The object-based storage system uses a flat, non-hierarchical address space to store data, providing the flexibility to scale massively. Cloud service providers leverage object-based storage systems to offer Storage as a Service because of its inherent security, scalability, and automated data management capabilities. Object-based storage systems support web service access via REST and SOAP. Eg. AWS S3.
+- **object-based**: object-based storage is a way to **store file data in the form of objects based on the content and other attributes** of the data rather than the name and location of the file. An object contains user data, related metadata (size, date, ownership, etc.), and user defined attributes of data (retention, access pattern, and other business-relevant attributes). The additional **metadata or attributes enable optimized search**, retention and deletion of objects. The object-based storage system uses a flat, non-hierarchical address space to store data, providing the flexibility to scale massively. Cloud service providers leverage object-based storage systems to offer Storage as a Service because of its inherent security, scalability, and automated data management capabilities. Object-based storage systems support web service access via REST and SOAP. Eg. **AWS S3**.
 
 <p align="center">
   <img src="./assets/object-based-storage-access.png" width="600">
@@ -684,7 +719,7 @@ Storage system architectures are based on data access methods whose common varia
 
 ## Storage Area Network (SAN)
 
-A network of compute systems and storage systems is called a storage area network (SAN). A SAN enables the compute systems to **access and share storage systems**. Sharing improves the utilization of the storage systems. Using a SAN facilitates centralizing storage management, which in turn simplifies and potentially standardizes the management effort.
+A network of compute systems and storage systems is called a Storage Area Network (SAN). A SAN enables the compute systems to **access and share storage systems**. Sharing improves the utilization of the storage systems. Using a SAN facilitates centralizing storage management, which in turn simplifies and potentially standardizes the management effort.
 **SANs are classified based on protocols they support**. Common SAN deployments types are Fibre Channel SAN (FC SAN), Internet Protocol SAN (IP SAN), and Fibre Channel over Ethernet SAN (FCoE SAN), ATA over Ethernet (AoE) adn HyperSCSI. It can be implemented as some controllers attached to some JBoDS (Just a Bunch of Disks).  
 
 While NAS provides both storage and a file system, **SAN provides only block-based storage** and leaves file system concerns on the "client" side. 
@@ -764,18 +799,9 @@ For instance, servers have an ECC memory with Error Correction Code built in.
 Racks are divided in Units: 1 U is the minimal size you can allocate on a rack. Generally 2 meters rack has 42 Units. 
 
 
-## Hypervisors
-A hypervisor is a software, firmware or hardware that creates and **runs virtual machines**. 
-It can be **bare-metal** hypervisor or **hosted** hypervisor. A bare-metal is where the hypervisor is the OS itself, often requires certified hardware. Hosted hypervisor is VirtualBox.
-
-An hypervisor **permits to overbook physical resources** to allocate more resources than exist.
-
-It create also a **virtual switch to distribute the networking** over all VMs. 
-
-
 ## Types of compute systems
-
-- **Tower**: a tower compute system, also known as a tower server, is a compute system built in an upright enclosure called a “tower”, which is **similar to a desktop cabinet**. Tower servers have a robust build, and have integrated power supply and cooling. They typically have individual monitors, keyboards, and mice. Tower servers **occupy significant floor space** and require **complex cabling** when deployed in a data center. Tower servers are typically used in smaller environments. Deploying a large number of tower servers in large environments may involve substantial expenditure.
+<!--
+- **Tower**: a tower compute system, also known as a tower server, is a compute system built in an upright enclosure called a “tower”, which is **similar to a desktop cabinet**. Tower servers have a robust build, and have integrated power supply and cooling. They typically have individual monitors, keyboards, and mice. Tower servers **occupy significant floor space** and require **complex cabling** when deployed in a data center. Tower servers are typically used in smaller environments. Deploying a large number of tower servers in large environments may involve substantial expenditure. -->
 
 - **Rack-mounted**: a rack-mounted compute system is a compute system designed to be **fixed on a frame called a “rack”**. A rack is a standardized enclosure containing multiple mounting slots, each of which holds a server. A single rack **contains multiple servers stacked vertically**, thereby **simplifying network cabling**, consolidating network equipment, and reducing floor space use. Each rack server has its own power supply and cooling unit. A “rack unit” (denoted by U or RU) is a unit of measure of the height of a server designed to be mounted on a rack. One rack unit is 1.75 inches (~4.5cm). A rack server is typically 19 inches (~50cm) in width and 1.75 inches (~45cm) in height. This is called a **1U rack** server. Other common sizes of rack servers are 2U and 4U. Some common rack cabinet sizes are 27U, 37U, and 42U. Typically, a console with a video screen, keyboard, and mouse is mounted on a rack to enable administrators to **manage the servers in the rack**. Some concerns with rack servers are that they are cumbersome to work with, and they generate a lot of heat because of which more cooling is required, which in turn increases power costs.
 
@@ -805,10 +831,23 @@ Typically the max number of CPUs is four and they are close to the memory module
 - **10U Blade server**: big chassis, up to 16 servers 2 CPUs each, simpler cabling, easy management and cost reduced. 
 - **Intel Ruler**: up to 1 petabyte but there is no room for CPU because it is a SS media. Possible to design a one half PB ruler with room for CPUs.
 
-Differs from desktop systems:
-- CPU architecture with a new generation memory called [NUMA](https://en.wikipedia.org/wiki/Non-uniform_memory_access).
-- Hyper threading
-- Intra socket connection 
+Differs from desktop systems. 
+- CPU architecture with a new generation memory called [NUMA](https://en.wikipedia.org/wiki/Non-uniform_memory_access) (Non Uniform Memory Architecture). 
+  - Drop the assumption that all the RAMs are equal. NUMA is supported in the most used servers and virtualizer. Create threads and process that are NUMA aware: split data in an array and each thread works on a part of it. APIs are provided in order to access specific memory zones in a NUMA architecture.
+- [Hyper threading](https://en.wikipedia.org/wiki/Hyper-threading)
+  - Hyper-threading makes a single processor core appear as two logical processor cores, allowing the hyper-threading enabled operating system (or hypervisor) to schedule two threads simultaneously to avoid idle time on processor. However, the two threads cannot be executed at the same time because the two logical cores share the resources of a single physical core. When core resources are not in use by the current thread, especially when the processor is stalled (for example due to data dependency), resources of the core are used to execute the next scheduled thread. 
+  In this case emerges a problem of memory condivision, and the solutions are usually:
+    - One cache per core
+    - One cache per couple of cores
+    - A shared RAM between some cores (Multi channel D-RAM:  more bandwidth than DDR)
+
+    If I have two threads in many cases I can execute 2 istruction at time (thread overlapping, hyper threading). 
+- https://en.wikipedia.org/wiki/Intel_UltraPath_Interconnect
+- Inter socket and Intra socket connection:
+  - initially cores used a token ring or two token rings, now they use a mash.
+  - Crossbar interconnection (each CPU at the vertex of a square connected by the edges and the diagonals too) between CPU's to reduce 1 hop.
+
+- Intel [AVX](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions) CPU architecture
 - MCDRAM (multi channel RAM) with less latency
 
 ## Misc
@@ -817,18 +856,7 @@ Trade-off in CPU design: high frequency, low cores. All depends on the applicati
 
 Latency is slightly higher when I access a RAM bank of another socket because I have to ask for it via a bus that interconnects them (UPI in an Intel CPU).
 
-Crossbar interconnection (each CPU at the vertex of a square connected by the edges and the diagonals too) between CPU's to reduce 1 hop.
-
-**NUMA**: Non Uniform Memory Architecture  
-Drop the assumption that all the RAMs are equal. NUMA is supported in the most used servers and virtualizer. Create threads and process that are NUMA aware: split data in an array and each thread works on a part of it. APIs are provided in order to access specific memory zones in a NUMA architecture. 
-
-**Hyper-threading** makes a single processor core appear as two logical processor cores, allowing the hyper-threading enabled operating system (or hypervisor) to schedule two threads simultaneously to avoid idle time on processor. However, the two threads cannot be executed at the same time because the two logical cores share the resources of a single physical core. When core resources are not in use by the current thread, especially when the processor is stalled (for example due to data dependency), resources of the core are used to execute the next scheduled thread. 
-
-**Inter socket** and **Intra Socket** connection: initially cores used a token ring or two token rings, now they use a mash. 
-
-Inside the core there are some functional units like: branch mis-prediction unit, FMA (Floating point Multiply Add). Each core has a dedicated cache at L1 and a shared cache at L2.
-
-**MCDRAM** (Multi Channel RAM): more bandwidth than DDR.
+Inside the core there are some funtional units like: branch missprediction unit, FMA (Floating point Multiply Add). Each core has a dedicated cache at L1 and a shared cache at L2.
 
 **SMART technology** in drives: predictive system in the drive that gives the probability that the drive will fail in the next hours. Used by the driver provider for statistics, usage patterns.
 
@@ -840,7 +868,7 @@ When you program for the cloud you dont know where your process will be executed
 Cloud is a collection of **network-accessible** IT resources:
  - consists of **shared pools of hardware and software resources** deployed in data centers
 
-One of the main concept of cloud computing is the one of pooling, which means that a set of **heterogeneous resources** can be viewed as a whole big resource in order to provide reassignment capability and location independence (which means that the clint cannot control where his data are, except for maybe the geographical area). Another important concept is the one of resource measurement. The cloud computing business model revolves around pricing and resource consumption, so the system must be able to monitor it.
+One of the main concept of cloud computing is the one of pooling, which means that a set of **heterogeneous resources** can be viewed as a whole big resource in order to provide reassignment capability and location independence (which means that the client cannot control where his data are, except for maybe the geographical area). Another important concept is the one of resource measurement. The cloud computing business model revolves around pricing and resource consumption, so the system must be able to monitor it.
 
 Cloud computing **benefits** are:
 - Agility
@@ -850,11 +878,7 @@ Cloud computing **benefits** are:
 - Rapid development and testing
 - No infrastructure management
 
-**Private Cloud** set of IT resources that are local.
-
 There is a trade off between centralization (the bottleneck is the storage) and distribution (the bottleneck is the network).
-
-**SLA** Service Level Agreement: how much do I make users pay?
 
 <p align="center">
   <img src="./assets/cloud-services.png" width="600">
@@ -883,7 +907,11 @@ In the cloud computing reference model there are some sylos of cross layer funct
   <img src="./assets/physical-layer.png" width="600">
 </p>
 
-Executes requests generated by virtualization and control layer. Specifies entities that operate at this layer (devices, systems, protocols...)
+The physical layer comprises compute, storage, and network resources, which are the fundamental physical computing resources that make up a cloud infrastructure. It executes requests generated by virtualization and control layer and specifies entities that operate at this layer:
+  - storage and its access method (file-based, block-based, object-based or unified)
+  - network
+  - compute systems
+  - other resources
 
 ### Virtual Layer
 
@@ -905,52 +933,59 @@ This allows a **multi tenant environment** since I can run multiple organization
 
 VM networks comprise virtual switches, virtual NICs, and uplink NICs that are created on a physical compute system running a hypervisor.
 
-- **vSwitch**: a virtual switch is a **logical OSI Layer 2 Ethernet switch** created within a compute system. A virtual switch is either internal or external. An internal virtual switch connects only the VMs on a compute system. It has no connection to any physical NIC and cannot forward traffic to a physical network. An external virtual switch connects the VMs on a compute system to each other and also to one or more physical NICs. A physical NIC already connected to a virtual switch cannot be attached to any other virtual switch.
+<details>
+  <summary>Click to expand</summary>
 
-- **vNIC**: A virtual NIC **connects a VM to a virtual switch** and functions similar to a physical NIC. Virtual NICs send and receive VM traffic to and from the VM network. A VM can have one or more virtual NICs. Each virtual NIC has unique MAC and IP addresses and uses the Ethernet protocol exactly as a physical NIC does. The hypervisor generates the MAC addresses and allocates them to virtual NICs. 
+  - **vSwitch**: a virtual switch is a **logical OSI Layer 2 Ethernet switch** created within a compute system. A virtual switch is either internal or external. An internal virtual switch connects only the VMs on a compute system. It has no connection to any physical NIC and cannot forward traffic to a physical network. An external virtual switch connects the VMs on a compute system to each other and also to one or more physical NICs. A physical NIC already connected to a virtual switch cannot be attached to any other virtual switch.
 
-- **Uplink NIC**: an uplink NIC is a physical NIC connected to the uplink port of a virtual switch and functions as an **Inter-Switch Link** between the virtual switch and a physical Ethernet switch. It is called uplink because it only provides a physical interface to connect a compute system to the network and **is not addressable from the network**. Uplink NICs are **neither assigned an IP address nor are their built-in MAC addresses** available to any compute system in the network. It simply forwards the VM traffic between the VM network and the external physical network without modification.
+  - **vNIC**: A virtual NIC **connects a VM to a virtual switch** and functions similar to a physical NIC. Virtual NICs send and receive VM traffic to and from the VM network. A VM can have one or more virtual NICs. Each virtual NIC has unique MAC and IP addresses and uses the Ethernet protocol exactly as a physical NIC does. The hypervisor generates the MAC addresses and allocates them to virtual NICs. 
 
-<p align="center">
-  <img width="600" src="./assets/virtual-network.png">
-</p>
+  - **Uplink NIC**: an uplink NIC is a physical NIC connected to the uplink port of a virtual switch and functions as an **Inter-Switch Link** between the virtual switch and a physical Ethernet switch. It is called uplink because it only provides a physical interface to connect a compute system to the network and **is not addressable from the network**. Uplink NICs are **neither assigned an IP address nor are their built-in MAC addresses** available to any compute system in the network. It simply forwards the VM traffic between the VM network and the external physical network without modification.
+
+  <p align="center">
+    <img width="600" src="./assets/virtual-network.png">
+  </p>
+</details>
 
 #### VM components
 
-The **hypervisor** is responsible for running multiple VMs. Since I want to execute x86 ISA over an x86 server I don't need to translate the code.
+The **hypervisor** is responsible for running multiple VMs. Since I want to execute x86 ISA over an x86 server I don't need to translate the code. An hypervisor **permits to overbook physical resources** to allocate more resources than exist and it also create also a **virtual switch to distribute the networking** over all VMs. 
 
 Hypervisors types:
-  - Bare-metal: directly installed on the hardware. It has direct access to the hardware resources of the compute system. Therefore, it is more efficient than a hosted hypervisor. However, this type of hypervisor may have limited device drivers built-in. Therefore, hardware certified by the hypervisor vendor is usually required to run bare-metal hypervisors. A bare-metal hypervisor is designed for enterprise data centers and cloud infrastructure. 
-  - Hosted: installed as an application on an operating system. In this approach, the hypervisor does not have direct access to the hardware and all requests must pass through the operating system running on the physical compute system.
+  - **Bare-metal**: directly installed on the hardware. It has **direct access to the hardware** resources of the compute system. Therefore, it is more efficient than a hosted hypervisor. However, this type of hypervisor may have limited device drivers built-in. Therefore, hardware certified by the hypervisor vendor is usually required to run bare-metal hypervisors. A bare-metal hypervisor is designed for enterprise data centers and cloud infrastructure. 
+  - **Hosted**: installed as an application on an operating system. In this approach, the hypervisor **does not have direct access to the hardware** and all requests must pass through the operating system running on the physical compute system.
+
+#### Types of virtualization
 
 Types of virtualization:
   - **paravirtualization** the virtual kernel cooperates with the hosting OS.
     - the CPU is aware of the virtualization, it distinguishes the interrupts generated by the vOS.
   - **driver integration** you don't have to emlulate all the drivers but you can ask the underlying OS for this service.
 
-Each VM is a set of discrete **configuration files** where there are the values aswering the questions: how much memory, how much disk, where is the disk file, how many CPU's cores. An example of those files are:
+#### Virtual Machine (VM)
+
+Each **Virtual Machine** is a **set of discrete configuration files** where there are the values aswering the questions: how much memory, how much disk, where is the disk file, how many CPU's cores. An example of those files are:
   - configuration file: stores information, such as VM name, BIOS information, guest OS type, memory size
   - virtual disk file: stores the contents of the VM's disk drive
   - memory state file: stores the memory contents of a VM in a suspended state
   - snapshot file: stores the VM settings and virtual disk of a VM
 
 The disk is virtualized usign a file, while for the Network there is a VNIC (Network Interface Card) connected to a vSWITCH, comunicating with the physical NIC. The vNIC is used also by the real OS because it's physical NIC is busy doing the vSWITCH.  
-
-The Virtual Disk is a file of fixed size or dynamically expanding. The vOS can be shared among the VMs and stored elsewhere than in the vdisk file. Each write goes on the vdisk (can undo all the write ops), instead each read first look in the "file" where the vOS is, than in the vdisk file if the previous check wasn't successful. I can also freeze the virtual disk, and extend the file with the software I want to add, making also rollback possible. This file abstraction for the disk makes also possible the application of a copy on write mechanism. I can use the same portion of file to save an operating system, and then create only one virtual disk file containing the differences between the various virtual machine and the original disk. 
+<p align="center">
+  <img width="500" src="./assets/virtual-network.png">
+</p>
+The Virtual Disk is a file of fixed size or dynamically expanding. The vOS can be shared among the VMs and stored elsewhere than in the vdisk file. Each write goes on the vdisk (can undo all the write ops), instead each read first look in the "file" where the vOS is, than in the vdisk file if the previous check wasn't successful. I can also freeze the virtual disk, and extend the file with the software I want to add, making also rollback possible. This file abstraction for the disk makes also possible the application of a copy on write mechanism. I can use the same portion of file to save an operating system, and then create only one virtual disk file containing the differences between the various virtual machine and the original disk (more or less like image layering in Docker*). 
 
 The Virtual CPU masks the feature of a CPU to a VM. The VCPU can be overbooked, up to twice the number of cores. The CPU has several rings of protection (user ... nested vos,vos,os).
 
 
-#### About the virtual memory:  
-It's not allowed to use a virtual memory as VM RAM because the sum of the VM RAM should be less or equal to the actual RAM. Fragmentation could be a problem if there is lot of unused reserved memory.
+#### vRAM balooning
 
-#### Balooning 
+It's not allowed to use a virtual memory as vRAM because the sum of the vRAM should be less or equal to the actual RAM. Fragmentation could be a problem if there is lot of unused reserved memory. In order to achive this, a technique called balooning has been introduced.  
 It is sayd to the VM: "Look, you have 1TB of RAM but most of it it's occupied". In this way we have dynamically expanding blocks of RAM: if the OS needs memory I can deflate the baloon by moving the occupancy threshold.
 
-#### Other considerations about the Virtual Layer
-The persistent state of a VM is made of the **conf file** and the file of the disk. Mooving a VM it's really simple: just stop it (freeze) and move the two files just mentioned.  
-
 #### Docker
+
 It exploits Linux's Resource Group. The processes in the container can see only a part of the OS. The containers have to share the networking. Docker separates different software stacks on a single node.
 
 ### Control Layer
@@ -959,33 +994,39 @@ It exploits Linux's Resource Group. The processes in the container can see only 
   <img width="600" src="./assets/control-layer.png">
 </p>
 
-The control layer includes control software that are **responsible for managing and controlling  the underlying cloud infrastructure resources and enable provisioning of IT resources** for creating cloud services. Control layer can be deployed on top of the virtual layer or on top of the physical layer. This layer receives request from the service and orchestration layers, and interacts with the underlying virtual and physical resources for provisioning IT resources. For example, when a consumer initiates a service request (a VM instance with 4 GB RAM and 500 GB storage), based on the workflow defined by the orchestration layer for this service, the control layer provisions the required resources from the resource pool to fulfill the service request. This layer also exposes the resources (physical and/or virtual) to and supports the service layer where cloud services interfaces are exposed to the consumers. The key functions of the control layer includes resource configuration, resource provisioning, and monitoring resources. 
+The control layer includes control software that are **responsible for managing and controlling  the underlying cloud infrastructure resources and enable provisioning of IT resources** for creating cloud services. Control layer can be deployed on top of the virtual layer or on top of the physical layer. This layer receives request from the service and orchestration layers, and interacts with the underlying virtual and physical resources for provisioning IT resources. For example, **when a consumer initiates a service request (a VM instance with 4 GB RAM and 500 GB storage), based on the workflow defined by the orchestration layer for this service, the control layer provisions the required resources from the resource pool to fulfill the service request**. This layer also exposes the resources (physical and/or virtual) to and supports the service layer where cloud services interfaces are exposed to the consumers. 
 
-Enables resource configutarion and resource pool configuration. Enable resource provisioning. Execute requests generated by service layer. It takes physical or virtual resources and puts them in a common domain allocating existing and new resources.  
-Receives request from the service and orchestration layers and provisions the required resources to fulfill the service request
+The **key functions** of the control layer includes:
+- resource **configuration**
+- resource **provisioning**
+- **monitoring** resources. 
 
+Summarizing, **control software**:
 
-- Enables resource configuration and resource pool configuration
-- Enables resource provisioning
-- Executes requests generated by service layer
-- Exposes resources to and supports the service layer
-- Collaborates with the virtualization software and enables
-  - Resource pooling and creating virtual resources
-  - Dynamic allocation of resources
-  - Optimizing utilization of resources
+- Enables **resource configuration** and resource **pool configuration**
+- Enables resource **provisioning**
+- Executes **requests** generated **by service layer**
+- **Exposes resources** to and supports the service layer
+- Collaborates with the virtualization software and enables:
+  - **Resource pooling** and creating **virtual resources**
+  - **Dynamic allocation** of resources
+  - **Optimizing utilization** of resources
 
-**Key phases for provisioning resources**:
-  - *Resource discovery*: create an inventory of the infrastructure resources, so that unified manager can learn what resources are available for cloud service deployment
-  - *Resource pool management*: virtual resources such as VM, virtual volume, and virtual network are created from these pools and provisioned for the services
-  - *Resource provisioning*: involves allocating resources from graded resource pools to the service instances
+#### Key phases for provisioning resources
 
-**Thin provisioning**
-	- This is a virtualization technology that gives the appearance of having more physical resources than are actually available. Thin provisioning allows space to be easily allocated to servers, on a just-enough and just-in-time basis. Thin provisioning is called "sparse volumes" in some contexts.
+- Resource **discovery**: create an inventory of the infrastructure resources, so that unified manager can learn what resources are available for cloud service deployment
+- Resource **pool management**: virtual resources such as VM, virtual volume, and virtual network are created from these pools and provisioned for the services
+- Resource **provisioning**: involves allocating resources from graded resource pools to the service instances
 
-**Open stack**  
-A free and open-source software platform for cloud computing, mostly deployed as infrastructure-as-a-service (IaaS), whereby virtual servers and other resources are made available to customers.
+#### Thin provisioning
 
-Good idea but bad implementation. Various open source softwares, difficult to deply, lots of dead code, bad security implementation. It has a small form of orchestration but it's not a service orchestrator (i.e. no distribution of the workload, scaling)
+This is a **virtualization technology** that gives the **appearance of having more physical resources than are actually available**. Thin provisioning allows space to be easily allocated to servers, on a just-enough and just-in-time basis. Thin provisioning is called "sparse volumes" in some contexts.
+
+#### Open stack 
+
+A **free and open-source software platform for cloud computing**, mostly deployed as infrastructure-as-a-service (IaaS), whereby virtual servers and other resources are made available to customers.
+
+**Good idea but bad implementation**. Various open source softwares, difficult to deply, lots of dead code, bad security implementation. It has a small form of orchestration but it's not a service orchestrator (i.e. no distribution of the workload, scaling)
 
 ### Service layer
 
@@ -994,15 +1035,16 @@ Good idea but bad implementation. Various open source softwares, difficult to de
 </p>
 
 **What is a cloud service?**  
-Cloud services are IT resources that are packaged by the service providers and are offered to the consumers. Once constituent IT resources are provisioned and configured, a service is instantiated. The instantiated service is called a service instance. 
+Cloud services are IT resources that are packaged by the service providers and are offered to the consumers. Once constituent IT resources are provisioned and configured, a service is instantiated.
 
-**Service layer**  
-The service layer of the cloud infrastructure enables a provider to define services and a consumer to self-provision services. Additionally, it presents cloud interfaces to the consumers, enabling them to consume deployed services. 
+#### Service layer
 
 The service layer has three key functions which are as follows: 
-- **Enables defining services in a service catalog**: Cloud service providers should ensure that the consumers are able to view the available services, service level options, and service cost that will help them effectively to make the right choice of services. Cloud services are defined in a service catalog, which is a menu of services offerings from a service provider. The catalog provides a central source of information on the service offerings delivered to the consumers by the provider, so that the consumers can get a standard, accurate and consistent view of services that are available to them.
- - **Enables on-demand, self-provisioning of services**: A service catalog also allows a consumer to request or order a service from the catalog that best matches the consumer’s need without manual interaction with a service provider. While placing a service request, a consumer commonly submits service demands, such as required resources, needed configurations, and location of data. Once a service request is approved by the provider, appropriate resources are provisioned for the requested service. 
- - **Presents cloud interfaces to consume services**: Cloud interfaces are the functional interfaces and the management interfaces of the deployed service instances. Using these interfaces, the consumers perform computing activities, such as executing a transaction and administer their use of rented service instances, such as modifying, scaling, stopping, or restarting a service instance.
+- **Enables defining services in a service catalog**: cloud service providers should ensure that the consumers are able to view the available services, service level options, and service cost that will help them effectively to make the right choice of services. Cloud services are defined in a **service catalog**, which is a menu of services offerings from a service provider. The catalog provides a central source of information on the service offerings delivered to the consumers by the provider, so that the consumers can get a standard, accurate and consistent view of services that are available to them.
+
+ - **Enables on-demand, self-provisioning of services**: a service catalog also allows a consumer to request or order a service from the catalog that best matches the consumer’s need **without manual interaction with a service provider**. While placing a service request, a consumer commonly submits service demands, such as required resources, needed configurations, and location of data. Once a service request is approved by the provider, appropriate resources are provisioned for the requested service. 
+
+ - **Presents cloud interfaces to consume services**: cloud interfaces are the functional interfaces and the **management** interfaces of the deployed service instances. Using these interfaces, the consumers perform computing activities, such as executing a transaction and administer their use of rented service instances, such as modifying, scaling, stopping, or restarting a service instance.
 
 ### Orchestration layer
 
@@ -1013,14 +1055,19 @@ The service layer has three key functions which are as follows:
 
 Automated arrangement, coordination, and management of various system or component functions in a cloud infrastructure to provide and manage cloud services.
 
-A cloud portal is an access (usually web-based) point to a cloud, which provides access to the service catalog, and facilitates self-service provisioning and ongoing access to the cloud interfaces. A cloud portal is also accessed by the cloud administrators to manage cloud infrastructure and the lifecycle of cloud services. Service lifecycle includes various phases of a service from its initiation to termination. 
+#### Cloud portal
 
-Once a service provisioning or management request is placed in the cloud portal, the portal routes the request to the orchestration layer where appropriate workflows are triggered to fulfill the request. The orchestration layer is the automation engine of the cloud infrastructure, which defines standardized workflows for process automation. The workflows help orchestrating the execution of various system functions across the cloud infrastructure to fulfill the request. 
+A cloud portal is an access (usually web-based) point to a cloud, which **provides access to the service catalog**, and facilitates **self-service provisioning** and ongoing access to the cloud interfaces. A cloud portal is also accessed by the cloud administrators to manage cloud infrastructure and the lifecycle of cloud services.
 
+Once a service provisioning or management request is placed in the cloud portal, the **portal routes the request to the orchestration layer** where appropriate **workflows are triggered to fulfill the request**. The orchestration layer is the automation engine of the cloud infrastructure, which defines standardized workflows for process automation. The workflows help orchestrating the execution of various system functions across the cloud infrastructure to fulfill the request. 
+
+#### Orchestration types
 
 Tow different types of orchestration:
 - low level: eg. installation of a new VM
 - high level: eg. configuration of the new VM. At the end of this process the VM will be up and running
+
+#### Orchestration APIs
 
 APIs are used to perform activities such as:
 - Resource provisioning and configuration
@@ -1030,7 +1077,7 @@ APIs are used to perform activities such as:
 #### Example of orchestration workflows
 DB2 instance request            |  CRM instance request
 :-:|:-:
-<p float="center"><img src="./assets/orchestratorworkflow.png" width="600"></p>  |  <p float="center"><img src="./assets/orchestratorworkflow2.png" width="660"></p>
+<img src="./assets/orchestratorworkflow.png">  |  <img src="./assets/orchestratorworkflow2.png">
 
 #### Service orchestration
 
@@ -1042,12 +1089,11 @@ Service orchestration provides several benefits:
 
 Although some manual steps (performed by cloud administrators) may be required while processing the service provisioning and management functions, service providers are looking to **automate these functions as much as possible**.
 
-Cloud service providers typically deploy a purpose-designed **orchestration software or orchestrator** that orchestrates the execution of various system functions. The orchestrator programmatically integrates and sequences various system functions into automated workflows for executing higher-level service provisioning and management functions provided by the cloud portal. The orchestration workflows are not only meant for fulfilling requests from consumers but also for administering cloud infrastructure, such as adding resources to a resource pool, handling service-related issues, scheduling a backup for a service, billing, and reporting. 
+Cloud service providers typically deploy a purpose-designed **orchestration software or orchestrator** that orchestrates the execution of various system functions. **The orchestrator programmatically integrates and sequences various system functions into automated workflows** for executing higher-level service provisioning and management functions provided by the cloud portal. The orchestration workflows are **not only meant for fulfilling requests from consumers** but **also for administering cloud infrastructure**, such as **adding resources to a resource pool, handling service-related issues, scheduling a backup for a service, billing, and reporting**. 
 
 <p align="center">
   <img width="600" src="./assets/orchestrator-example.png">
 </p>
-
 
 ### Business Continuity layer
 
@@ -1055,9 +1101,9 @@ Cloud service providers typically deploy a purpose-designed **orchestration soft
   <img width="600" src="./assets/business-continuity-layer.png">
 </p>
 
-Business continuity is a set of processes that includes all activities that a business must perform to **mitigate the impact of service outage**. BC entails preparing for, responding to, and recovering from a system outage that adversely affects business operations. It describes the processes and procedures a service provider establishes to **ensure that essential functions can continue during and after a disaster**. Business continuity prevents interruption of mission-critical services, and reestablishes the impacted services as swiftly and smoothly as possible by using an automated process. BC involves **proactive measures**, such as business impact analysis, risk assessment, building resilient IT infrastructure, deploying data protection solutions (**backup and replication**). It also involves reactive countermeasures, such as disaster recovery, to be invoked in the event of a service failure. Disaster recovery (DR) is the coordinated process of restoring IT infrastructure, including data that is required to support ongoing cloud services, after a natural or human-induced disaster occurs. 
+Business continuity is a set of processes that includes **all activities** that a business must perform to **mitigate the impact of service outage**. Business continuity entails preparing for, responding to, and recovering from a system outage that adversely affects business operations. It describes the processes and procedures a service provider establishes to **ensure that essential functions can continue during and after a disaster**. Business continuity prevents interruption of mission-critical services, and reestablishes the impacted services as swiftly and smoothly as possible by using an automated process. Business continuity involves **proactive measures**, such as business impact analysis, risk assessment, building resilient IT infrastructure, deploying data protection solutions (**backup and replication**). It also involves **reactive countermeasures**, such as disaster recovery, to be invoked in the event of a service failure. Disaster recovery (DR) is the coordinated process of restoring IT infrastructure, including data that is required to support ongoing cloud services, after a natural or human-induced disaster occurs. 
 
-#### Redundancy (to avoid single point of failure)
+#### Single point of failure
 
 Single points of failure refers to any individual component or aspect of an infrastructure whose failure can make the entire system or service unavailable. Single points of failure may occur at infrastructure component level and site level (data center). 
 
@@ -1065,32 +1111,29 @@ Methods to avoid Singole Points of Failure:
 - Redundancy
 - Multiple service availablity zones
 
-#### Redundancy and service Zones
+#### Redundancy
 
-**N+1 redundancy** is a common form of fault tolerance mechanism that ensures service availability in the event of a component failure. A set of N components has at least one standby component. This is typically implemented as an **active/passive** arrangement, as the additional component does not actively participate in the service operations. The standby component is active only if any one of the active components fails. N+1 redundancy with **active/active** component configuration is also available. In such cases, the standby component remains active in the service operation even if all other components are fully functional. For example, if active/active configuration is implemented at the site level, then a cloud service is fully deployed in both the sites. The load for this cloud service is balanced between the sites. If one of the site is down, the available site would manage the service operations and manage the workload. 
+Redundancy is a technique used to **avoid single point of failure**. **N+1 redundancy** is a common form of fault tolerance mechanism that ensures service availability in the event of a component failure. A set of N components has at least one standby component. This is typically implemented as an **active/passive** arrangement, as the additional component does not actively participate in the service operations. The standby component is active only if any one of the active components fails. N+1 redundancy with **active/active** component configuration is also available. In such cases, the standby component remains active in the service operation even if all other components are fully functional. For example, if active/active configuration is implemented at the site level, then a cloud service is fully deployed in both the sites. The load for this cloud service is balanced between the sites. If one of the site is down, the available site would manage the service operations and manage the workload. 
 
-Be careful to **active/passive failure**, when a system fails but also the "passive" part fails immediatly because I haven't checked it.
-
+Be careful to **active/passive failure**, when a system fails but also the "passive" part fails immediatly because any checks have been executed.
 
 **Key techniques to protect compute**:
 - Clustering (Two common clustering implementations are: Active/active ; Active/passive)
-- VM live migration
+- [VM live migration](#live-migration-of-a-vm)
 
 **Key techniques to protect network connectivity**:
-- Link and switch aggregation (cross connection)
+- Link and switch **aggregation** (cross connection)
   - Link aggregation: **combines two or more parallel network links into a single logical link**, called port-channel, yielding higher bandwidth than a single link could provide. Link aggregation enables distribution of network traffic across the links and traffic failover in the event of a link failure. If a link in the aggregation is lost, all network traffic on that link is redistributed across the remaining links. 
   - Switch aggregation: **combines two physical switches and makes them appear as a single logical switch**. All network links from these physical switches appear as a single logical link. This enables a single node to use a port-channel across two switches and network traffic is distributed across all the links in the port-channel. 
-- NIC teaming: groups NICs so that they appear as a single, logical NIC to the OS or hypervisor
-- Multipathing: enables a compute system to use multiple paths for transferring data to a LUN on a storage system
-- In-service software upgrade: is a technique where the software (firmware) on a network device (switch and router) can be patched or upgraded without impacting the network availability
-- Configuring redundant hot swappable components
+- **NIC teaming**: groups NICs so that they appear as a single, logical NIC to the OS or hypervisor
+- **Multipathing**: enables a compute system to use multiple paths for transferring data to a LUN on a storage system
+- **In-service software upgrade**: is a technique where the software (firmware) on a network device (switch and router) can be patched or upgraded without impacting the network availability
+- Configuring **redundant hot swappable components**
 
 **Key techniques to protect storage**:  
 - RAID and erasure coding
 - Dynamic disk sparing
 - Configuring redundant storage system components
-
-**Networking redundancy**  
 
 <p align="center">
   <img src="./assets/redundancy.png" width="600">
@@ -1098,29 +1141,35 @@ Be careful to **active/passive failure**, when a system fails but also the "pass
 
 #### Service Availability Zones
 
-A service availability zone is a location with its own set of resources and isolated from other zones to avoid that a failure in one zone will not impact other zones. A zone can be a part of a data center or may even be comprised of the whole data center. This provides redundant cloud computing facilities on which applications or services can be deployed. 
+A service availability zone is a **location with its own set of resources and isolated from other zones** to avoid that a failure in one zone will not impact other zones. A zone can be a part of a data center or may even be comprised of the whole data center. This provides redundant cloud computing facilities on which applications or services can be deployed. 
 
-Service providers typically deploy multiple zones within a data center (to run multiple instances of a service), so that if one of the zone incurs outage due to some reasons, then the service can be failed over to the other zone. They also deploy multiple zones across geographically dispersed data centers (to run multiple instances of a service), so that the service can survive even if the failure is at the data center level. It is also important that there should be a mechanism that allows seamless (automated) failover of services running in one zone to another. 
+Service providers typically **deploy multiple zones within a data center** (to run multiple instances of a service), so that if one of the zone incurs outage due to some reasons, then the service can be failed over to the other zone. They also **deploy multiple zones across geographically dispersed data centers** (to run multiple instances of a service), so that the service can survive even if the failure is at the data center level. It is also important that there should be a mechanism that allows seamless (automated) failover of services running in one zone to another. 
+
+<p align="center">
+  <img src="./assets/service-zones.png" width="600">
+</p>
 
 #### Live Migration of a VM
+
 Moving a VM from server A to B (from hypervisor A to hypervisor B) while it's running. The user could experience a degradation of the service but not a disruption.
 
-In a VM live migration the entire active state of a VM is moved from one hypervisor to another. The state information includes memory contents and all other information that identifies the VM. This method involves copying the contents of VM memory from the source hypervisor to the target and then transferring the control of the VM’s disk files to the target hypervisor. Next, the VM is suspended on the source hypervisor, and the VM is resumed on the target hypervisor. Because the virtual disks of the VMs are not migrated, this technique requires that both source and target hypervisors have access to the same storage. Performing VM live migration requires a high speed network connection. It is important to ensure that even after the migration, the VM network identity and network connections are preserved. 
+In a VM live migration **the entire active state of a VM is moved from one hypervisor to another**. The state information includes memory contents and all other information that identifies the VM. This method involves copying the contents of VM memory from the source hypervisor to the target and then transferring the control of the VM’s disk files to the target hypervisor. Next, the VM is suspended on the source hypervisor, and the VM is resumed on the target hypervisor. Because the virtual disks of the VMs are not migrated, this technique requires that both source and target hypervisors have access to the same storage. Performing VM live migration requires a high speed network connection. It is important to ensure that even after the migration, the VM network identity and network connections are preserved. 
 
-Live migration summary:
-- copy the RAM and at the end, copy the pages writed during this phase.
+**Live migration** summary:
+- copy the **RAM** and at the end, copy the **pages** writed during this phase.
 - create an empty drive on B
-- copy the CPU registers (the VM is stopped for a really short period)
-- manage VSwitch and ARP protocol. The virtual switch must be aware of the migration: if the old vswitch receives a pkt for the just migrated VM it should send it to B.
+- copy the **CPU registers** (the VM is stopped for a really short period)
+- manage vSwitch and ARP protocol. The virtual switch must be aware of the migration: if the old vSwitch receives a packet for the just migrated VM it should forward it to B.
 - continue running the VM on B, only when it needs the disk you stop it and start copying the disk file. A jumboframe can be used to avoid storage traffic fragmentation.
 
 The whole process is a little bit easier if both the VMs use a shared storage. 
 
 <p align="center">
-  <img src="./assets/vm-migration.png" width="600">
+  <img src="./assets/vm-live-migration.png" width="600">
 </p>
 
-#### Server Setup Checklist:
+#### Server Setup Checklist
+
 - OS installation
 - HyperVisor installation
 - Creation of a virtual switch
@@ -1131,53 +1180,52 @@ The whole process is a little bit easier if both the VMs use a shared storage.
 - From the datacenter network switch, setting the VLAN in order to flow traffic to that node
 - The server is ready to join the active directory (server is trusted)
 
-The active directory allows for policy based management of the various servers.
+Share the identities of the users to not replicate them in each server:
+- **lDAP** lightweight Directly Access Protocol: distributed database organized as a tree where we store the name of the users.
 
+- **active-directory**: uses a secure protocol to exchange credentials throught the network. It's a centralized data structure listing users.
+The active directory allows for policy based management of the various servers.
 
 #### Backups 
 
-It' a data protection solution, and it should be automatized. It has become a crucial point in data center management to the extent in which cloud provider have started providing Backup-aaS and DisasterRecovery-aaS.
+It' a data **protection solution**, and it should be automatized. It has become a crucial point in data center management to the extent in which cloud provider have started providing Backup-aaS and DisasterRecovery-aaS.
 
-With Replicas are  data protection solutions. This task becomes more challenging with the growth of data, reduced IT budgets, and less time available for taking backups. Moreover, service providers need fast backup and recovery of data to meet their service level agreements. The amount of data loss and downtime that a business can endure in terms of RPO and RTO are the primary considerations in selecting and implementing a specific backup strategy. 
+With **replicas are  data protection solutions**. This task becomes more challenging with the growth of data, reduced IT budgets, and less time available for taking backups. Moreover, service providers need fast backup and recovery of data to meet their service level agreements. The amount of data loss and downtime that a business can endure in terms of **RPO and RTO are the primary considerations** in selecting and implementing a specific backup strategy. 
 
-**RTO**: Recovery Time Objective: time it will take to have a full recovery. Relates to the time taken to recover data from backup  
-**RPO**: Recovery Point Objective: what is the last consistent copy of the storage I will find. How many data points do you have to go back in time? specifies the time interval between two backups.
+- **RTO (Recovery Time Objective)**: time it will take to have a full recovery. Relates to the time taken to recover data from backup  
+- **RPO (Recovery Point Objective)**: what is the last consistent copy of the storage I will find. How many data points do you have to go back in time? specifies the time interval between two backups. Is defined by business continuity planning. It is the maximum targeted period in which data might be lost from an IT service due to a major incident (DR - Disaster Recovery).
 
-The Recovery Point Objective is defined by business continuity planning. It is the maximum targeted period in which data might be lost from an IT service due to a major incident (DR - Disaster Recovery).
+**Network** is the **first problem** when I want to make a backup, beacuse the **size of the backup** is bigger than the network bandwidth. Sometimes it's simply impossible to make a backup.
 
-Network it's the first problem when I want to make a backup, beacuse the size of the backup is bigger than the network bandwidth.  
-Sometimes it's simply impossible to make a backup.
+Backup types:
 
-#### Backup types
+- **Incremental backup**: backup **only the updated parts**. High RTO cause I have to reconstruct all the files hierarchy going back througth the back ups. Sometimes snapshots are needed.
 
-**Incremental backup**: backup only the updated parts. High RTO cause I have to reconstruct all the files hierarchy going back througth the back ups. Sometimes snapshots are needed.
+- **Guest level**: a VM is treated as if it is a physical compute system. A **backup agent is installed on the VM**, and it streams the backup data to the storage node. If multiple VMs on a compute system are backed up simultaneously, then the combined I/O and bandwidth demands placed on the compute system by the various guest-level backup operations can deplete the compute system resources. 
 
-**Guest level**: a VM is treated as if it is a physical compute system. A backup agent is installed on the VM, and it streams the backup data to the storage node. If multiple VMs on a compute system are backed up simultaneously, then the combined I/O and bandwidth demands placed on the compute system by the various guest-level backup operations can deplete the compute system resources. 
-
-**Image level:**  uses snapshots. It's agentless (agent == client who gathers the data that is to be backed up), the agent can't crash since there isn't one. The backup processing is performed by a proxy server that acts as the backup client. Backup is saved as a single entity called a VM image. Provides VM image-level and file-level recovery.
+- **Image level:**  uses **snapshots**. It's **agentless** (agent == client who gathers the data that is to be backed up), the agent can't crash since there isn't one. The backup processing is performed by a proxy server that acts as the backup client. Backup is saved as a single entity called a VM image. Provides VM image-level and file-level recovery.
 
 **Backup as a Service**: service providers offer backup as a service that enables an organization to reduce its backup management overhead. It also enables the individual consumer to perform backup and recovery anytime, from anywhere, using a network connection. 
 
 **Backup window**: the horizon effect: you decide a window but the stuff you need will be always in the deleted part.
 
-**Data Deduplication**: the process of detecting and identifying the unique data segments (chunk) within a given set of data to eliminate redundancy. The use of deduplication techniques significantly reduces the amount of data to be backed up in a cloud environment, where typically a large number of VMs are deployed. Take the hash of two identical files, store only one of the two files and both the hashes.  
- If the same file is required in two context, it is saved one time and is served to different context.
+**Data Deduplication**: the process of detecting and **identifying the unique data segments** (chunk) within a given set of data **to eliminate redundancy**. The use of deduplication techniques significantly reduces the amount of data to be backed up in a cloud environment, where typically a large number of VMs are deployed. **Take the hash of two identical files**, **store only one** of the two files **and both the hashes**. If the same file is required in two context, it is saved one time and is served to different context.
 
-**Replica**: the process of creating an exact copy (replica) of the data. The syncronous replica needs an acknowledgement before proceeding, and any additional writes on the source cannot occur until each preceding write has been completed and acknowledged.  DBs like Oracle, SQL Servers want syncronous replica. 
-- Local replication
-  - Snapshot and mirroring
-- Remote replication
+**Replica**: the process of creating an **exact copy** of the data. The syncronous replica needs an acknowledgement before proceeding, and any additional writes on the source cannot occur until each preceding write has been completed and acknowledged.  DBs like Oracle, SQL Servers want syncronous replica. 
+- **Local** replication
+  - Snapshot
+  - Mirroring
+- **Remote** replication
   - Synchronous: typically deployed for distances less than 200 KM between the two sites
   - Asynchronous: write from a compute system is committed to the source and immediately acknowledged
 
-With the **backup** you can choose the chunk of files to "backup".
-
-
-### Security layer 
+### Security layer  (TODO: complete)
 
 <p align="center">
   <img src="./assets/security-layer.png" width="600">
 </p>
+
+The fundamental requirements of information security and compliance pertain to both non-cloud and cloud infrastructure management. In both the environments, there are some common security requirements. However, in a cloud environment there are important additional factors, which a service provider must consider, that arise from information ownership, responsibility and accountability for information security, and the cloud infrastructure’s multi-tenancy characteristic. Therefore, **providing secure multi-tenancy is a key requirement** for building a cloud infrastructure. 
 
 Key security threats according:
 - Data leakage: occurs when an unauthorized entity (an attacker) gains access to a cloud consumer’s confidential data stored on the cloud infrastructure
@@ -1200,8 +1248,8 @@ Key security threats according:
 
 Firewall, Antivirus, Standard procedures to direct safe execution of operations.
 
-Three levels of security:
-- **Procedural**: phising, the weakest link is the human.
+#### Levels of security
+- **Procedural**: phising, the weakest link is the human
 - **Logical**: abstraction produced by the OS. **mandatory access** (classification of the infos); **discreptional access** (~ ACL)
 - **Physical**
 - Authentication
@@ -1248,12 +1296,10 @@ Disable the possibility of changing the MAC address at the hypervisor level.
 - **level 3 firwall**: looks at the envelope, source address, port ...
 - **level 7 firewall**: reconstruct the full pkt looking inside its content.
 
----
 
-Share the identities of the users to not replicate them in each server:
-- **lDAP** lightweight Directly Access Protocol: distributed database organized as a tree where we store the name of the users.
-
-- **active-directory**: uses a secure protocol to exchange credentials throught the network. It's a centralized data structure listing users.
+<p align="center">
+  <img src="./assets/securityArchitecture.png" width="600">
+</p>
 
 ### Service Managment layer
 
@@ -1261,19 +1307,17 @@ Share the identities of the users to not replicate them in each server:
   <img src="./assets/service-managment-layer.png" width="600">
 </p>
 
-Cloud service management has a service-based focus, meaning that the management functions are linked to the service requirements and service level agreement (SLA). Be aware of regulations and legal constraints that define how to run a system.
+Cloud service management has a service-based focus, meaning that the **management functions are linked to the service requirements and service level agreement** (SLA). Be **aware of regulations and legal constraints** that define how to run a system. Is this system behaving according to the regulations? Recap that information processors (cloud providers) are responsible of the data they process.
 
-Level of compliancy to the policy. Demonstrate compliancy. Is this system behaving according to the regulations?  
-Information processors (cloud providers) are responsible of the infos they process.
+**SLA** Service Level Agreement: legal contract that you sign as a customer to the provider defining what the user is paying for.
 
-**SLA** Service Level Agrrement: legal contract that you sign as a customer to the provider defining what the user is paying for.  
-**service availability** = 1 - (downtime/ agreed service time)  
+**Service availability** = 1 - (downtime/ agreed service time)  
 The uptime is difficult to define and to test because the reachability of the cloud depend also from the service providers.
 
-The lower the resources used, the higher the margin got. Low level magrgin business: very high numbers * low margins = big profits.
+#### Service Operation management
 
-**Service Operation management** is crucial, it keeps up the whole thing running. 
-Maintains cloud infrastructure and deployed services, ensuring that services and service levels are delivered as committed. Ideally, service operation management should be automated:
+Service Operation management is crucial, it keeps up the whole thing running. 
+Maintains cloud infrastructure and deployed services, ensuring that services and service levels are delivered as committed. Ideally, service operation management **should be automated**:
   - Service management tools automate many management activities
   - Orchestrated workflows integrate functions of management tools  
   - Activities
@@ -1282,47 +1326,53 @@ Maintains cloud infrastructure and deployed services, ensuring that services and
     - Problem resolution
     - Capacity planning
     - Availability and performance conformance
+    
 **Service Level** not only functional requirements.
 
 Ensure **charge-back** (pay per use), **show-back** (I exhausted the resources so I need more): make a good use of the money spent on hardware, people. Measure how much are you efficient in spending money.
 
-**TCO**: estimates the full lifecycle cost of owning service assets. The cost includes capital expenditure (CAPEX), such as procurement and deployment costs of hardware and on-going operational expenditure (OPEX), such as power, cooling, facility, and administration cost. 
+**TCO (Toal Cost of Ownership)**: estimates the **full lifecycle cost of owning service** assets. The cost includes capital expenditure (**CAPEX**), such as procurement and deployment costs of hardware and on-going operational expenditure (**OPEX**), such as power, cooling, facility, and administration cost. 
 
-Reducing risk is a kind of **ROI** Return On Investment.
+**ROI (Return On Investment)**: reducing risk is a kind of ROI
 
-**CAPEX** CAPital EXpenses: buy something. It's a one time cost e.g procurement and deployment costs of hardware .
+**CAPEX (CAPital EXpenses)**: buy something. It's a one time cost e.g procurement and deployment costs of hardware .
 
-**OPEX** OPerational EXpences: use something. It's a recurrent cost e.g power, cooling, facility, and administration costs.
+**OPEX (OPerational EXpences)**: use something. It's a recurrent cost e.g power, cooling, facility, and administration costs.
 
-**Capacity Planning/ Management**: make some forecast to find when we will exhaust the resources and how many resources we will really need.  Ensure that a cloud infrastructure is able to meet the required capacity demands for cloud services in a cost effective and timely manner.  
+#### Capacity Planning/ Management
+
+Capacity Planning/ Management: make some forecast to find when we will exhaust the resources and how many resources we will really need.  Ensure that a cloud infrastructure is able to **meet the required capacity demands** for cloud services in a cost effective and timely manner.  
+
 Common Methods to Maximize Capacity Utilization:
-- Resource pooling
-- Over-commitment of processor cycles and memory (it can bring to capacity issues.)
-- Automated VM load balancing across hypervisors
-- Dynamic scheduling of virtual processors across processing cores
-- Thin provisioning
-- Automated storage tiering
-- Dynamic VM load balancing across storage volumes
-- Converged network
-- WAN optimization
-- Automatic reclamation of capacity when a service is terminated
+- Resource **pooling**
+- **Over-commitment** of processor cycles and memory (it can bring to capacity issues)
+- Automated VM **load balancing** across hypervisors
+- **Dynamic scheduling** of virtual processors across processing cores
+- **Thin provisioning**
+- Automated **storage tiering**
+- Dynamic VM **load balancing across storage volumes**
+- **Converged network**
+- **Automatic reclamation** of capacity when a service is terminated
 
 
-**Monitoring**: collecting data (in a respectfull way). Availability Monitoring, Capacity Monitoring, Performance Monitoring, Security Monitoring ...   
-Monitoring benefits:
- - Helps to track the availability and performance status of infrastructure components and services 
- - Helps to analyze the utilization and consumption of resources by service instances
- - Helps to track events that may impact availability and performance
- - Helps in metering, reporting, and alerting
- - Helps to present information as service metrics to consumers
+**Monitoring**: collecting data (in a respectfull way). Availability Monitoring, Capacity Monitoring, Performance Monitoring, Security Monitoring.
 
- Examples of Performance-related Changes:
- - Allocating more memory to VMs running cloud management software
- - Migrating a service to a different availability zone
- - Moving application instances to a public cloud in a hybrid cloud environment
- - Changing policy for balancing client workload across servers
+Monitoring **benefits**:
+ - Helps to track the availability and **performance** status of infrastructure components and services 
+ - Helps to analyze the **utilization** and consumption of resources by service instances
+ - Helps to track **events** that **may impact availability** and performance
+ - Helps in **metering**, **reporting**, and **alerting**
+ - Helps to present information as service **metrics to consumers**
 
-Keep track of things, processes, servers, configurations so that you can roll back.
+ Examples of **Performance-related Changes**:
+ - Allocating **more memory to VMs** running cloud management software
+ - **Migrating** a service **to a different availability zone**
+ - **Moving** application instances **to a public cloud** in a hybrid cloud environment
+ - Changing policy for **balancing client workload** across servers
+
+**Keep track** of things, processes, servers, configurations **so that you can roll back**.
+
+#### Incident/Problem Management
 
 **Incident/Problem Management**  
 Indentify the impact of a failure to all the other services.  
@@ -1331,15 +1381,13 @@ Return cloud services to consumers as quickly as possible when unplanned events,
 
 Prevent incidents that share common symptoms or—more importantly—root causes from reoccurring, and to minimize the adverse impact of incidents that cannot be prevented.
 
-Examples of Business Continuity Solutions
- - Clustering of compute systems to provide automated service failover
- - Replicating a database and hypervisor’s native file system continuously
- - Deploying multiple availability zones, enabling automated service failover globally
- - Creating redundant network links between devices, sites, and clouds in a hybrid cloud
+#### Examples
 
-<p align="center">
-  <img src="./assets/securityArchitecture.png" width="600">
-</p>
+Examples of Business Continuity Solutions
+ - **Clustering** of compute systems to provide automated service failover
+ - **Replicating** a database and hypervisor’s native file system continuously
+ - Deploying **multiple availability zones**, enabling automated service failover globally
+ - Creating **redundant** network links between devices, sites, and clouds in a hybrid cloud
 
 
 #### GDPR General Data Protection Regulation
@@ -1359,7 +1407,7 @@ Even in Open Source there is vendor lock-in due to the difficulty of mooving fro
 It' rare that a leading vendor define a common standard. Standardization it's important but it's not feasable. It partly avoids lock-in. ""The only thing that can be standardize it's the VM"". Every platform tends to have its own API. REST is the standard that is working today in the cloud.
 
 
-## Miscellaneous
+## Misc
 
 **Greenfield installation** : format, configure everything from scratch, in opposition with **brownfield installation**: network is already existing, routers, hosts... I have to mantain support for legacy stuff and integrate the new technology. Greenfield installation is typically used when an infrastructure does not exist and an organization has to build the cloud infrastructure starting from the physical layer.
 
@@ -1369,21 +1417,20 @@ It's acceptable that some users experiments performances issues while upgrading.
 
 **Procedures** are really important: knowing the procedure and applying it can avoid lost of data, users, money.
 
-**NIC teaming**
-
 **Erasure Coding** like RAID 5 (xor), with n drives of data and k drives of informations
 
 # In class exercises
 
-## 1) Spine and leaves VS traditional architecture
+## 1) Spine and leaf VS traditional architecture
 
 ### Question
 Discuss the difference between spine and leaf fabric and the more traditional fabric architecture based on larger chassis. How bandwidth and latency are affected?
 
 ### Solution
 
-**Spine and Leaf**  
-Non modular, fixed switches are interconnected with some MLAG (Multi-chassis Link Aggregation). Loosely copuled form of aggregation: the two switches are independent and share some form of aggregation. LACP protocol allowing to bind multiple links to a single conceptual link (link aggregation, active-active).  
+## Spine and Leaf
+Non modular, fixed switches are interconnected with some MLAG (Multi-chassis Link Aggregation). Loosely copuled form of aggregation: the two switches are independent and share some form of aggregation. Each leaf is connected to all the spines (if the leaf has 6 upwards ports, 2 are used to connect the two coupled switches in the leaf ,the others are used to the connection with the spine). At least 2 spines for redundancy. The spines are not connected each other.   
+ LACP protocol allowing to bind multiple links to a single conceptual link (link aggregation, active-active).  
 **over-subscription** the links to the spine should be able to sustain the trafic coming from all the links below. This is not a problem for EW trafic between servers attached to the same switch (because the link to the spine is not affected).  
 Pros:
 - resilient
@@ -1409,8 +1456,8 @@ Today is not so much used because it's difficult to design a backplane offering 
 With spine and leaf we introduce more hops, so more latency, than the chassis approach. The solution for this problem is using as a base of the spine a huge switch (256 ports) which actually acts as a chassis, in order to reduce the number of hops and latency.
 
 **Bandwidth**   
-To enlarge the bandwidth in a spine and leaves architecture we need only to add a new spine and to connect to all leaves. With the chassis approach we can add bandwidth adding new line cards (new switches) to the chassis, provided that there are free slots in the chassis.   
-In the spine and leaves arch we can upgrade a spine reducing the bandwidth, but still without disrupting the connectivity. In the traditional chassis an upgrade degrades the bandwidth => TODO: verify.
+To enlarge the bandwidth in a spine and leaf architecture we need only to add a new spine and to connect to all leaves. With the chassis approach we can add bandwidth adding new line cards (new switches) to the chassis, provided that there are free slots in the chassis.   
+In the spine and leaf arch we can upgrade a spine reducing the bandwidth, but still without disrupting the connectivity. In the traditional chassis an upgrade degrades the bandwidth => TODO: verify.
 
 ## 2) Orchestration layer
 
@@ -1448,6 +1495,27 @@ Discuss a datacenter architecture made of 10 racks. Assuming a power distributio
 ### Solution
 Use an in row cooling approach trying to reduce the rows to be cooled. Do not forget to mention the PDU and the UPS. (2 plugs per rack 32A each).
 
+Some claculations:
+1) Calculate the amount of current per rack:
+    - 15000W/380V = ~40A per rack
+2) Each rack has 40A, so assuming that is contains 42 servers we have:
+    - 380V*(40A/42) = ~360W per server (slightly less than 300 are required for the sole CPUs)
+3) Calculate the amount of current on the PDU:
+    - 40A*10 = 400A for the racks
+    - assuming a PUE of 1.2 and knowing that 
+
+<p align="center">
+  <img src="http://latex.codecogs.com/gif.latex?\text{PUE}%20=%20\dfrac{\text{total%20current}}{\text{compute%20current}}%20"/>
+</p>
+
+- calculate the toal current
+  - total current = 1.2 * compute current = 1.2*400 = 480 A on the PDU, that must be spread between racks and cooling systems.
+4) Dimension the UPS:
+    - Assume that in case of PDU issues you want to keep alive ony half racks, you can buy a UPS capable of generating 240A
+
+
+NB. We have not considered the [power factor](#power-factor), which is a number equal to 1.0 or less. Reactance, obtainied by converting AC in DC, reduces the useful power (watts) available from the apparent power. The ratio of these two numbers is called the power factor (PF).
+
 ## 4) SAN VS Hyperconvergent architecture
 
 ### Question
@@ -1455,6 +1523,7 @@ Use an in row cooling approach trying to reduce the rows to be cooled. Do not fo
 A service requires a sustained throughput towards the storage of 15 GB/s. Would you recomment using a SAN architecture or an hyperconvergent one.
 
 ### Solution
+
 
 - 15 GB is the max bandwidth of a PCI express bus with 16 lanes.  
 - 100 Gbps bandwidth of a single link (even if internally is 4*25 Gbps).  
@@ -1497,7 +1566,12 @@ The choice depends also on the kind of data I assume to process (assume at least
 
 It's not enough to say: I take 5 big drives, because their bandwidth can be a bottleneck.
 
-SAN could be the good solution because it's cheaper. SAN can be used with tiering: in the first layer I keep SSD "buffers",  in the second layer mechanical drives. If I keep a buffer of 1TB I'll have a minute to copy down the buffered data to the mech drives.
+SAN could be the good solution because it's cheaper. SAN can be used with **tiering**: in the first layer I keep SSD "buffers",  in the second layer mechanical drives. If I keep a buffer of 1TB I'll have 6 minutes to copy down the buffered data to the mech drives.  
+Assuming 24 Gbps of incoming bandwidth and 1 TB of SSD buffer.  
+24 Gbps = 3 GBps --> 1000 Gb /3 = 330 s to saturate the buffer.  
+Netxt to the buffer there are mech drives (130/150 MBps)  
+I write to the SSD 3000 MBps but I copy to the drive (assuming just 1) 150 MBps. So the incoming bandwidth in the buffer is 3000 -150 = 2850 MB/s.  
+With one mech drive I will saturate the disk in 1000 GB / 2.8 GBps = 360 s = 6 min
 
 If I consider the text of the exercise, in particular 'towards', as in the sense of "only writing", imagining to have to almost only archive data and read only from time to time, I can actually consider SAN, because if I go hyperconvergent I am paying also for the CPU which might be unused. If I instead have a balance between r/w and want a good throughput for both operations, or I have a peek and then a flatter period of time with few action, then I might choose better going hyperconvergent.
 
@@ -1515,41 +1589,35 @@ A service requires a sustained throughput towards the storage of 15 GB/s. How wo
 
 ### Solution
 
-Look first at the network (fabric is the glue of the infrastructure).  
-Can't have 100 GBps straight to the server because of spine and leaf, so I have to consider the idea of distribution.
+Look first at the network (fabric is the glue of the infrastructure). Can't have 100 GBps straight to the server because of spine and leaf, so I have to consider the idea of distribution (hyperconvergent). 
 
-Just 1 or 2 ports of 100Gbps are enough to saturate the PCIe. 
+Recap that:
+ - just 1 or 2 ports of 100Gbps are enough to saturate the PCIe. 
+ - not good to have 100Gbps for each node cause I'm overloading that single node while HCI is distributed
 
-Not good to have 100Gbps for each node cause I'm overloading that single node while HCI is distributed.
-
-Well first I have to choose the Ethernet bandwidth between (10-25-50-100-400), considering that 400 Gbps is achievable only on the spine, and not ont the leaves.
-
-Better 10 Gbps or 25Gbps depending on Capex.  
+First I have to choose the Ethernet bandwidth between (10-25-50-100-400), considering that 400 Gbps is achievable only on the spine, and not on the leaves. 
+Better 10 Gbps or 25Gbps depending on CAPEX.  
 With spine and leaf I have 50 Gbps  cause I double (active-active).
 
-Consider at least 5 full used nodes with 25 Gbps network. Since I want to have some redundancy and efficiency I can use 8 to 10 nodes. I'm overprovisioning but it's good.
-
-Every HCI node will have some SSD (at leat 2, 1 GB/sec writing) and some mechanical drives.  If I use SATA drives I need al leat 6 for each node because the bottle neck is in their bandwidth. I can use NVMe drives: lower number but I pay more.
-
-**Consider SLA**: how much I gonna pay for the missed target/data? If it's a lot it's better to overprovision.
-
-### Solution summary
+**Some calculations**   
 We have 15 GB/s incoming bandwidth -->  15 * 8 = 120 Gbps   
 We first dimension a spine and leaf architecture to sustain this bandwidth value.
 We have a couple of options:
   - 10 Gbps per server (hyperconvergent node)
   - 25 Gbps per server (we choose this)
 
-To cover 120 Gbps we need at least 5 nodes --> 5*25 = 125 Gbps  
-(We could also add more node to have redundancy and efficiency, but we will consider 5 in the calculations)
+To cover 120 Gbps we need at least 5 nodes --> 5*25 = 125 Gbps
 
-Since we have 120 Gbps totally each node will recive 24 Gbps = 120 /5  
+We could also add more (up to 8-10) nodes to have redundancy and efficiency, but we will consider 5 in the calculations
+
+Every HCI node will have some SSD (as buffer) and some mechanical drives.
+
+Since we have 120 Gbps totally each node will receive 120 / 5 = 24 Gbps storage bandwidth
 This is ok since the link to the node is 25Gbps (even if we have active-active configuration so the actual bandwidth is 50 Gbps)  
 
 Now we must consider the number of drives in each node. The drive throughput must sustain the incoming bandwidth  of 24Gbps to avoid data loss. We know that SSD drives have a bandwidth of 500 MBps, so half a GB.  
- So 24 Gbps / 8 = 3 GBps  
- \#disks * (1/2 GBps) = 3 GBps --> \#disks = 6
-
+ So 24 Gbps / 8 = 3 GBps
+  - \#disks * (1/2 GBps) = 3 GBps --> \#disks = 6
 
 Remember that bandwidth are not fully used because of some overhead..(e.g. to connect two spine nodes together)
 
@@ -1604,6 +1672,7 @@ Remember that bandwidth are not fully used because of some overhead..(e.g. to co
   - 1/3 ports upwards, 2/3 downward
   - 48 ports 10 Gbps (downward)
     - plus 6 ports 40 Gbps each (upward)
+    - oversubscription. 48\*10 / [(6-2)\*40] = 3/1 
   - 48 ports 25 Gbps each (downward)
     - 6 port 100 Gbps (upward)
 
@@ -1620,7 +1689,6 @@ Remember that bandwidth are not fully used because of some overhead..(e.g. to co
 - SCSI interface 22.5 Gbps
 
 # References
-TODO: make some order
 - https://tools.ietf.org/html/rfc4391
 - [Omni-Path](https://en.wikipedia.org/wiki/Omni-Path)
 - https://en.wikipedia.org/wiki/Remote_direct_memory_access
@@ -1630,7 +1698,6 @@ TODO: make some order
 - https://en.wikipedia.org/wiki/Software-defined_data_center
 - https://en.wikipedia.org/wiki/Spanning_Tree_Protocol#Rapid_Spanning_Tree_Protocol
 - https://en.wikipedia.org/wiki/Multitier_architecture
-- https://blog.westmonroepartners.com/a-beginners-guide-to-understanding-the-leaf-spine-network-topology/
 - http://searchdatacenter.techtarget.com/definition/Leaf-spine
 - https://en.wikipedia.org/wiki/Network-attached_storage
 - https://en.wikipedia.org/wiki/Non-RAID_drive_architectures
@@ -1639,7 +1706,20 @@ TODO: make some order
 - https://en.wikipedia.org/wiki/Power_usage_effectiveness
 - https://howdoesinternetwork.com/2015/what-is-a-non-blocking-switch
 - https://en.wikipedia.org/wiki/Network_function_virtualization
-- http://www.itc.unipi.it/index.php/2016/02/23/comparison-of-solid-state-drives-ssds-on-different-bus-interfaces/
-- http://www.itc.unipi.it/wp-content/uploads/2016/05/ITC-TR-02-16.pdf
-- https://www.nutanix.com/hyperconverged-infrastructure/
+- Drives performances - http://www.itc.unipi.it/index.php/2016/02/23/comparison-of-solid-state-drives-ssds-on-different-bus-interfaces/
+- Drives performances - http://www.itc.unipi.it/wp-content/uploads/2016/05/ITC-TR-02-16.pdf
+- HCI - https://www.nutanix.com/hyperconverged-infrastructure/
+- Spine and leaf - https://community.fs.com/blog/leaf-spine-with-fs-com-switches.html
 - [Spine and leaves](https://community.fs.com/blog/leaf-spine-with-fs-com-switches.html)
+- Power consumption - https://searchdatacenter.techtarget.com/answer/How-do-I-estimate-server-power-consumption-per-rack
+- UPS dimension - https://searchdatacenter.techtarget.com/feature/How-do-I-figure-size-requirements-for-new-UPS-unit
+
+# Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+| [<img src="https://avatars0.githubusercontent.com/u/4717227?v=4" width="100px;" alt="Giacomo De Liberali"/><br /><sub><b>Giacomo De Liberali</b></sub>](http://giacomodeliberali.com)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=giacomodeliberali "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/34099303?v=4" width="100px;" alt="Frioli Leonardo"/><br /><sub><b>Frioli Leonardo</b></sub>](https://github.com/wikilele)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=wikilele "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/6088300?v=4" width="100px;" alt="Alessandro Pagiaro"/><br /><sub><b>Alessandro Pagiaro</b></sub>](https://apagiaro.it)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=alessandro308 "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/36964883?v=4" width="100px;" alt="LorenzoBellomo"/><br /><sub><b>LorenzoBellomo</b></sub>](https://github.com/LorenzoBellomo)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=LorenzoBellomo "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/4587828?v=4" width="100px;" alt="Mohamed Megahed"/><br /><sub><b>Mohamed Megahed</b></sub>](https://github.com/megantosh)<br />[📖](https://github.com/giacomodeliberali/ict-infrastructures/commits?author=megantosh "Documentation") |
+| :---: | :---: | :---: | :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
