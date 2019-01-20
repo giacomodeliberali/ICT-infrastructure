@@ -12,7 +12,6 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Table of contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Cloud Computing Reference Model [Module 2]](#cloud-computing-reference-model-module-2)
 - [Data centers](#data-centers)
@@ -34,7 +33,6 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
   - [Omni-Path](#omni-path)
   - [Connectors & plugs](#connectors--plugs)
   - [Software Defined Approach](#software-defined-approach)
-    - [Open Flow](#open-flow)
     - [SDN: Software Defined Networking](#sdn-software-defined-networking)
     - [Software-defined data center](#software-defined-data-center)
     - [Hyper-convergence](#hyper-convergence)
@@ -101,7 +99,7 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
       - [Live Migration of a VM](#live-migration-of-a-vm)
       - [Server Setup Checklist](#server-setup-checklist)
       - [Backups](#backups)
-    - [Security layer (TODO: complete)](#security-layer-todo-complete)
+    - [Security layer  (TODO: complete)](#security-layer--todo-complete)
       - [Levels of security](#levels-of-security)
       - [Firwall](#firwall)
     - [Service Managment layer](#service-managment-layer)
@@ -137,7 +135,7 @@ It is highly recommended to study with the EMC DELL slides provided under <<_Rac
   - [Disk and Storage](#disk-and-storage)
 - [Real Use Cases](#real-use-cases)
 - [Open Source](#open-source)
-- [Books](#books)
+- [Books & Guides](#books--guides)
 - [References](#references)
 - [Contributors](#contributors)
 
